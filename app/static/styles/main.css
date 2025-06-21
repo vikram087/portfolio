@@ -413,6 +413,7 @@ body {
 	font-weight: 600;
 	border: 1px solid #4caf50;
 	font-family: "Roboto", serif;
+	z-index: 50;
 }
 
 /* Responsive design */

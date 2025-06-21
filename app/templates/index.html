@@ -14,8 +14,8 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
+    <link lang='sass' rel="stylesheet" href="../static/styles/main.css">
+    <link rel='icon' href='../static/img/favicon.ico' type='image/x-icon' />
     <title>{{ title }}</title>
 </head>
 
@@ -24,7 +24,7 @@
         <div class="nav-content">
             <a href="/">
                 <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
+                    <img src="../static/img/logo.svg" />
                 </div>
             </a>
         </div>
@@ -32,9 +32,52 @@
 
     <div class="profile">
         <div id="profile-picture" class="profile-picture">
-            <img src="./static/img/logo.jpg">
+            <img src="../static/img/logo.jpg">
         </div>
         <h1>{{ title }}</h1>
+    </div>
+
+    <div class="hobbies-section">
+        <div class="hobbies-header">
+            <h2 class="hobbies-title">Hobbies & Interests</h2>
+            <p class="hobbies-subtitle">What I Love Doing in My Free Time</p>
+        </div>
+        <div class="hobbies-content">
+            
+            <div class="hobbies-grid">
+                <div class="hobby-card soccer">
+                    <div class="hobby-icon">⚽</div>
+                    <h3 class="hobby-name">Soccer</h3>
+                    <p class="hobby-description">
+                        Passionate about the beautiful game! I love the teamwork, strategy, and athleticism that soccer demands. Whether it's pickup games or organized leagues, soccer keeps me active and competitive.
+                    </p>
+                </div>
+
+                <div class="hobby-card skiing">
+                    <div class="hobby-icon">🎿</div>
+                    <h3 class="hobby-name">Skiing</h3>
+                    <p class="hobby-description">
+                        There's nothing like carving down fresh powder! Skiing combines my love for adventure, nature, and adrenaline. The mountains provide the perfect escape from the digital world.
+                    </p>
+                </div>
+
+                <div class="hobby-card gym">
+                    <div class="hobby-icon">💪</div>
+                    <h3 class="hobby-name">Fitness</h3>
+                    <p class="hobby-description">
+                        Staying strong and healthy is a priority. The gym helps me maintain physical fitness, mental clarity, and provides a great way to challenge myself and set new personal records.
+                    </p>
+                </div>
+
+                <div class="hobby-card coding">
+                    <div class="hobby-icon">💻</div>
+                    <h3 class="hobby-name">Coding</h3>
+                    <p class="hobby-description">
+                        Programming isn't just my major—it's my passion! I love building side projects, exploring new technologies, and solving complex problems through elegant code solutions.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -7,6 +7,44 @@ load_dotenv()
 
 app = Flask(__name__)
 
+# Enhanced hobbies data with detailed information
+hobbies_list = [
+    {
+        "name": "Soccer",
+        "class": "soccer",
+        "icon": "⚽",
+        "image": "static/img/soccer.JPG",
+        "description": "Passionate about the beautiful game! I love the teamwork, strategy, and athleticism that soccer demands. Whether it's pickup games or organized leagues, soccer keeps me active and competitive.",
+        "details": {
+            "experience": "10+ years",
+            "favorite_team": "FC Barcelona",
+            "position": "Attacker",
+        },
+    },
+    {
+        "name": "Skiing",
+        "class": "skiing",
+        "icon": "🎿",
+        "image": "static/img/skiing.jpeg",
+        "description": "There's nothing like carving down fresh powder! Skiing combines my love for adventure, nature, and adrenaline. The mountains provide the perfect escape from the digital world.",
+        "details": {
+            "experience": "10+ years",
+            "skill_level": "Advanced",
+            "favorite_resort": "Palisades",
+        },
+    },
+    {
+        "name": "Fitness",
+        "class": "gym",
+        "icon": "💪",
+        "image": "static/img/gym.jpg",
+        "description": "Staying strong and healthy is a priority. The gym helps me maintain physical fitness, mental clarity, and provides a great way to challenge myself and set new personal records.",
+        "details": {
+            "experience": "4 years",
+        },
+    },
+]
+
 
 @app.route("/")
 def index():
@@ -108,31 +146,10 @@ def index():
             "date": "2022",
             "status": "past",
             "icon": "🏫",
-        },
-    ]
-
-    # Hobbies Data
-    hobbies_list = [
-        {
-            "name": "Soccer",
-            "class": "soccer",
-            "icon": "⚽",
-            "image": "../static/img/soccer.JPG",
-            "description": "Passionate about the beautiful game! I love the teamwork, strategy, and athleticism that soccer demands. Whether it's pickup games or organized leagues, soccer keeps me active and competitive.",
-        },
-        {
-            "name": "Skiing",
-            "class": "skiing",
-            "icon": "🎿",
-            "image": "../static/img/skiing.jpeg",
-            "description": "There's nothing like carving down fresh powder! Skiing combines my love for adventure, nature, and adrenaline. The mountains provide the perfect escape from the digital world.",
-        },
-        {
-            "name": "Fitness",
-            "class": "gym",
-            "icon": "💪",
-            "image": "../static/img/gym.jpg",
-            "description": "Staying strong and healthy is a priority. The gym helps me maintain physical fitness, mental clarity, and provides a great way to challenge myself and set new personal records.",
+            "achievements": [
+                {"icon": "🏆", "text": "Valedictorian"},
+                {"icon": "📐", "text": "Math Team Captain"},
+            ],
         },
     ]
 
@@ -156,6 +173,25 @@ def index():
         travel_places=travel_places,
         travel_stats=travel_stats,
     )
+
+
+@app.route("/hobbies")
+def hobbies():
+    """Dedicated hobbies page with detailed information"""
+    return render_template("hobbies.html", hobbies_list=hobbies_list)
+
+
+@app.route("/hobbies/<hobby_name>")
+def hobby_detail(hobby_name):
+    """Individual hobby detail page"""
+    # Find the specific hobby
+    hobby = next(
+        (h for h in hobbies_list if h["name"].lower() == hobby_name.lower()), None
+    )
+    if not hobby:
+        return "Hobby not found", 404
+
+    return render_template("hobby_detail.html", hobby=hobby)
 
 
 if __name__ == "__main__":

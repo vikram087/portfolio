@@ -14,8 +14,8 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link lang='sass' rel="stylesheet" href="../static/styles/main.css">
-    <link rel='icon' href='../static/img/favicon.ico' type='image/x-icon' />
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
     <title>Vikram Penumarti</title>
 </head>
 
@@ -65,11 +65,14 @@
         </div>
     </div>
 
-    <!-- Hobbies Section with Jinja -->
+    <!-- Hobbies Section with Jinja and Link to Detailed Page -->
     <div class="hobbies-section">
         <div class="hobbies-header">
             <h2 class="hobbies-title">Hobbies & Interests</h2>
             <p class="hobbies-subtitle">What I Love Doing in My Free Time</p>
+            <div class="section-nav-links">
+                <a href="/hobbies" class="view-more-btn">View Detailed Hobbies Page</a>
+            </div>
         </div>
         <div class="hobbies-content">
             <div class="hobbies-grid">
@@ -176,6 +179,14 @@
                     <h4 class="achievements-title">
                         {% if education.status == "current" %}Academic Highlights{% else %}High School Achievements{% endif %}
                     </h4>
+                    <div class="achievements-grid">
+                        {% for achievement in education.achievements %}
+                        <div class="achievement-item">
+                            <span class="achievement-icon">{{ achievement.icon }}</span>
+                            <p class="achievement-text">{{ achievement.text }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -199,6 +210,10 @@
                 <div class="stat-item">
                     <span class="stat-number">{{ travel_stats.countries }}</span>
                     <span class="stat-label">Countries Visited</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">9</span>
+                    <span class="stat-label">Cities Explored</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">{{ travel_stats.continents }}</span>

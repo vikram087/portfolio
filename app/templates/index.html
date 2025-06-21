@@ -14,8 +14,8 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
+    <link lang='sass' rel="stylesheet" href="../static/styles/main.css">
+    <link rel='icon' href='../static/img/favicon.ico' type='image/x-icon' />
     <title>{{ title }}</title>
 </head>
 
@@ -24,7 +24,7 @@
         <div class="nav-content">
             <a href="/">
                 <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
+                    <img src="../static/img/logo.svg" />
                 </div>
             </a>
         </div>
@@ -32,9 +32,36 @@
 
     <div class="profile">
         <div id="profile-picture" class="profile-picture">
-            <img src="./static/img/logo.jpg">
+            <img src="../static/img/logo.jpg">
         </div>
         <h1>{{ title }}</h1>
+    </div>
+
+    <div class="about-section">
+        <div class="about-header">
+            <h2 class="about-title">About Me</h2>
+            <p class="about-subtitle">Student • Developer • Innovator</p>
+        </div>
+        <div class="about-content">
+            <p class="about-text">
+                Hi, I'm <span class="highlight">Vikram</span>, a third year <span class="highlight">computer science major</span> at <span class="school-highlight">UC Davis</span>. I'm passionate about technology and building solutions that make a difference.
+            </p>
+            
+            <div class="about-stats">
+                <div class="stat-card">
+                    <span class="stat-number">3rd</span>
+                    <span class="stat-label">Year Student</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">CS</span>
+                    <span class="stat-label">Major</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">UC</span>
+                    <span class="stat-label">Davis</span>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

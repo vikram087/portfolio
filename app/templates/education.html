@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="Education - Vikram Penumarti">
+    <meta property="og:description" content="Academic journey and learning achievements">
+    <meta property="og:url" content="{{ url }}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/education.css') }}">
+    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
+    <title>Education - Vikram Penumarti</title>
+</head>
+
+<body>
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
+            </a>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">About</a>
+                <a href="/hobbies" class="nav-link">Hobbies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/education" class="nav-link active">Education</a>
+                <a href="/travel" class="nav-link">Travel</a>
+            </nav>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Education</h1>
+                <p class="hero-subtitle">Academic Journey & Learning</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number">3.63</span>
+                        <span class="stat-label">Engineering GPA</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">CS Courses</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">2026</span>
+                        <span class="stat-label">Graduation Year</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Timeline Section -->
+        <section class="education-section">
+            <div class="container">
+                <div class="education-timeline">
+                    {% for education in education_list %}
+                    <article class="education-item" data-status="{{ education.status }}">
+                        <div class="timeline-marker">
+                            <div class="marker-dot {{ education.status }}">
+                                <span class="school-icon">{{ education.icon }}</span>
+                            </div>
+                            {% if not loop.last %}
+                            <div class="timeline-line"></div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="education-card">
+                            {% if education.status == "current" %}
+                            <div class="education-status-badge current">Currently Enrolled</div>
+                            {% else %}
+                            <div class="education-status-badge completed">Completed</div>
+                            {% endif %}
+                            
+                            <div class="school-header">
+                                <div class="school-main-info">
+                                    <h3 class="school-name">{{ education.school_name }}</h3>
+                                    <h4 class="degree-title">{{ education.degree }}</h4>
+                                    <div class="school-meta">
+                                        <span class="school-location">📍 {{ education.location }}</span>
+                                        <span class="school-date">📅 {{ education.date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if education.description %}
+                            <div class="school-description">
+                                <p>{{ education.description }}</p>
+                            </div>
+                            {% endif %}
+
+                            {% if education.gpa %}
+                            <div class="gpa-section">
+                                <h5 class="section-subtitle">Academic Performance</h5>
+                                <div class="gpa-grid">
+                                    <div class="gpa-card">
+                                        <div class="gpa-value">{{ education.gpa.overall }}</div>
+                                        <div class="gpa-label">Overall GPA</div>
+                                    </div>
+                                    <div class="gpa-card highlight">
+                                        <div class="gpa-value">{{ education.gpa.engineering }}</div>
+                                        <div class="gpa-label">Engineering GPA</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if education.coursework %}
+                            <div class="coursework-section">
+                                <h5 class="section-subtitle">Relevant Coursework</h5>
+                                <div class="coursework-grid">
+                                    {% for course in education.coursework %}
+                                    <div class="course-card {{ course.category }}">
+                                        <span class="course-name">{{ course.name }}</span>
+                                        <span class="course-category-badge">{{ course.category|replace('-', ' ')|title }}</span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if education.achievements %}
+                            <div class="achievements-section">
+                                <h5 class="section-subtitle">
+                                    {% if education.status == "current" %}Academic Highlights{% else %}Achievements{% endif %}
+                                </h5>
+                                <div class="achievements-grid">
+                                    {% for achievement in education.achievements %}
+                                    <div class="achievement-card">
+                                        <div class="achievement-icon">{{ achievement.icon }}</div>
+                                        <div class="achievement-text">{{ achievement.text }}</div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Categories Section -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Course Categories</h2>
+                <div class="categories-grid">
+                    <div class="category-card ai-ml">
+                        <div class="category-icon">🤖</div>
+                        <h3 class="category-title">AI & Machine Learning</h3>
+                        <div class="category-courses">
+                            <span class="course-tag">Machine Learning</span>
+                            <span class="course-tag">Artificial Intelligence</span>
+                            <span class="course-tag">Deep Learning</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card theory">
+                        <div class="category-icon">📊</div>
+                        <h3 class="category-title">Theory & Algorithms</h3>
+                        <div class="category-courses">
+                            <span class="course-tag">Algorithm Design & Analysis</span>
+                            <span class="course-tag">Data Structures & Algorithms</span>
+                            <span class="course-tag">Programming Languages</span>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card software">
+                        <div class="category-icon">💻</div>
+                        <h3 class="category-title">Software Development</h3>
+                        <div class="category-courses">
+                            <span class="course-tag">Software Dev & OOP in C++</span>
+                            <span class="course-tag">Intro to Programming in C</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe education items and other sections
+            document.querySelectorAll('.education-item, .category-card, .achievement-highlight, .philosophy-item').forEach(item => {
+                observer.observe(item);
+            });
+
+            // Progressive timeline animation
+            const educationItems = document.querySelectorAll('.education-item');
+            educationItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('timeline-visible');
+                }, index * 300);
+            });
+
+            // Course card hover effects
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // GPA card animations
+            const gpaCards = document.querySelectorAll('.gpa-card');
+            gpaCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('slide-in');
+                }, index * 200 + 500);
+            });
+
+            // Course cards staggered animation
+            document.querySelectorAll('.course-card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Add interactive effects for achievement cards
+        document.querySelectorAll('.achievement-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.add('clicked');
+                setTimeout(() => {
+                    card.classList.remove('clicked');
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>

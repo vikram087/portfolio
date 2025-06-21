@@ -22,227 +22,161 @@
 <body>
     <header class="nav-bar">
         <div class="nav-content">
-            <a href="/">
-                <div class="nav-logo">
-                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
-                </div>
+            <a href="/" class="nav-logo">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
             </a>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link active">About</a>
+                <a href="/hobbies" class="nav-link">Hobbies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/education" class="nav-link">Education</a>
+                <a href="/travel" class="nav-link">Travel</a>
+            </nav>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
-    <div class="profile">
-        <div id="profile-picture" class="profile-picture">
-            <img src="{{ url_for('static', filename='img/Headshot.jpg') }}">
-        </div>
-        <h1>Vikram Penumarti</h1>
-    </div>
-
-    <!-- About Section -->
-    <div class="about-section">
-        <div class="about-header">
-            <h2 class="about-title">About Me</h2>
-            <p class="about-subtitle">Student • Developer • Innovator</p>
-        </div>
-        <div class="about-content">
-            <p class="about-text">
-                Hi, I'm <span class="highlight">Vikram</span>, a third year <span class="highlight">computer science major</span> at <span class="school-highlight">UC Davis</span>. I'm passionate about technology and building solutions that make a difference.
-            </p>
-            
-            <div class="about-stats">
-                <div class="stat-card">
-                    <span class="stat-number">3rd</span>
-                    <span class="stat-label">Year Student</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">CS</span>
-                    <span class="stat-label">Major</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">UC</span>
-                    <span class="stat-label">Davis</span>
-                </div>
+    <main class="main-content">
+        <div class="profile">
+            <div id="profile-picture" class="profile-picture">
+                <img src="{{ url_for('static', filename='img/Headshot.jpg') }}" alt="Vikram Penumarti">
+                <button id="music-button" class="music-button" title="Play one of my favorite songs">
+                    <span class="music-icon">🎵</span>
+                </button>
+                <audio id="background-music" preload="none">
+                    <source src="{{ url_for('static', filename='audio/best_time_clean.mp3') }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
             </div>
+            <h1>Vikram Penumarti</h1>
         </div>
-    </div>
 
-    <!-- Hobbies Section with Jinja and Link to Detailed Page -->
-    <div class="hobbies-section">
-        <div class="hobbies-header">
-            <h2 class="hobbies-title">Hobbies & Interests</h2>
-            <p class="hobbies-subtitle">What I Love Doing in My Free Time</p>
-            <div class="section-nav-links">
-                <a href="/hobbies" class="view-more-btn">View Detailed Hobbies Page</a>
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-header">
+                <h2 class="about-title">About Me</h2>
+                <p class="about-subtitle">Student • Developer • Innovator</p>
             </div>
-        </div>
-        <div class="hobbies-content">
-            <div class="hobbies-grid">
-                {% for hobby in hobbies_list %}
-                <div class="hobby-card {{ hobby.class }}">
-                    <div class="hobby-icon">{{ hobby.icon }}</div>
-                    <h3 class="hobby-name">{{ hobby.name }}</h3>
-                    <img src="{{ hobby.image }}" alt="{{ hobby.name }}" class="hobby-image">
-                    <p class="hobby-description">
-                        {{ hobby.description }}
-                    </p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <!-- Work Experience Section with Jinja -->
-    <div class="experience-section">
-        <div class="experience-header">
-            <h2 class="experience-title">Work Experience</h2>
-            <p class="experience-subtitle">Professional Journey & Impact</p>
-        </div>
-        <div class="experience-content">
-            {% for job in work_experiences %}
-            <div class="experience-item">
-                <div class="job-status {{ job.status }}">{{ job.status.title() }}</div>
-                <div class="job-header">
-                    <div>
-                        <h3 class="job-title">{{ job.title }}</h3>
-                        <h4 class="job-company">{{ job.company }}</h4>
-                        <p class="job-location">{{ job.location }}</p>
-                    </div>
-                    <div class="job-date">{{ job.date }}</div>
-                </div>
-                <div class="job-description">
-                    <ul>
-                        {% for bullet in job.description %}
-                        <li>{{ bullet }}</li>
-                        {% endfor %}
-                    </ul>
-                    <div class="tech-stack">
-                        {% for tech in job.tech_stack %}
-                        <span class="tech-tag">{{ tech }}</span>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Education Section with Jinja -->
-    <div class="education-section">
-        <div class="education-header">
-            <h2 class="education-title">Education</h2>
-            <p class="education-subtitle">Academic Journey & Learning</p>
-        </div>
-        <div class="education-content">
-            {% for education in education_list %}
-            <div class="education-item">
-                {% if education.status == "current" %}
-                <div class="education-status">Current</div>
-                {% endif %}
+            <div class="about-content">
+                <p class="about-text">
+                    Hi, I'm <span class="highlight">Vikram</span>, an incomming fourth year <span class="highlight">computer science major</span> at <span class="school-highlight">UC Davis</span>. I'm passionate about technology and building solutions that make a difference.
+                </p>
                 
-                <div class="school-header">
-                    <div class="school-info">
-                        <h3 class="school-name">
-                            <span class="school-icon">{{ education.icon }}</span>
-                            {{ education.school_name }}
-                        </h3>
-                        <h4 class="degree-info">{{ education.degree }}</h4>
-                        <p class="school-location">{{ education.location }}</p>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">4th</span>
+                        <span class="stat-label">Year Student</span>
                     </div>
-                    <div class="school-date">{{ education.date }}</div>
-                </div>
-
-                {% if education.gpa %}
-                <div class="gpa-section">
-                    <div class="gpa-item">
-                        <span class="gpa-value">{{ education.gpa.overall }}</span>
-                        <span class="gpa-label">Overall GPA</span>
+                    <div class="stat-card">
+                        <span class="stat-number">CS</span>
+                        <span class="stat-label">Major</span>
                     </div>
-                    <div class="gpa-item">
-                        <span class="gpa-value">{{ education.gpa.engineering }}</span>
-                        <span class="gpa-label">Engineering GPA</span>
+                    <div class="stat-card">
+                        <span class="stat-number">UC</span>
+                        <span class="stat-label">Davis</span>
                     </div>
-                </div>
-                {% endif %}
-
-                {% if education.coursework %}
-                <div class="coursework-section">
-                    <h4 class="coursework-title">Relevant Coursework</h4>
-                    <div class="coursework-grid">
-                        {% for course in education.coursework %}
-                        <span class="course-tag {{ course.category }}">{{ course.name }}</span>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if education.achievements %}
-                <div class="achievements-section">
-                    <h4 class="achievements-title">
-                        {% if education.status == "current" %}Academic Highlights{% else %}High School Achievements{% endif %}
-                    </h4>
-                    <div class="achievements-grid">
-                        {% for achievement in education.achievements %}
-                        <div class="achievement-item">
-                            <span class="achievement-icon">{{ achievement.icon }}</span>
-                            <p class="achievement-text">{{ achievement.text }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Map Section with Jinja -->
-    <div class="map-section">
-        <div class="map-header">
-            <h2 class="map-title">Places I've Visited</h2>
-            <p class="map-subtitle">Adventures Around the World</p>
-        </div>
-        <div class="map-content">
-            <div id="world-map"></div>
-        </div>
-        
-        <div class="travel-stats">
-            <h3>Travel Statistics</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">{{ travel_stats.countries }}</span>
-                    <span class="stat-label">Countries Visited</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">9</span>
-                    <span class="stat-label">Cities Explored</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">{{ travel_stats.continents }}</span>
-                    <span class="stat-label">Continents</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">{{ travel_stats.memories }}</span>
-                    <span class="stat-label">Memories Made</span>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Leaflet CSS and JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        </section>
+    </main>
 
     <script>
-        const map = L.map('world-map').setView([20, 0], 2);
+        // Mobile menu toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
 
-        // Use Jinja to pass data to JavaScript
-        const places = {{ travel_places | tojson }};
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
 
-        places.forEach(place => {
-            L.marker(place.coords)
-                .addTo(map)
-                .bindPopup(place.name);
+        // Smooth scrolling for profile picture
+        document.addEventListener('DOMContentLoaded', () => {
+            const profilePicture = document.getElementById('profile-picture');
+            profilePicture.style.opacity = '0';
+            profilePicture.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                profilePicture.style.transition = 'all 0.6s ease';
+                profilePicture.style.opacity = '1';
+                profilePicture.style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        // Music player functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const musicButton = document.getElementById('music-button');
+            const backgroundMusic = document.getElementById('background-music');
+            let isPlaying = false;
+
+            // Make sure elements exist
+            if (!musicButton || !backgroundMusic) {
+                console.error('Music elements not found');
+                return;
+            }
+
+            musicButton.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent any default button behavior
+                console.log('Music button clicked, isPlaying:', isPlaying);
+                
+                if (isPlaying) {
+                    backgroundMusic.pause();
+                    musicButton.innerHTML = '<span class="music-icon">🎵</span>';
+                    musicButton.classList.remove('playing');
+                    isPlaying = false;
+                    console.log('Music paused');
+                } else {
+                    console.log('Attempting to play music...');
+                    console.log('Audio src:', backgroundMusic.src);
+                    
+                    // Load the audio first if not loaded
+                    if (backgroundMusic.readyState === 0) {
+                        backgroundMusic.load();
+                    }
+                    
+                    const playPromise = backgroundMusic.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            console.log('Music started playing successfully');
+                            musicButton.innerHTML = '<span class="music-icon">⏸</span>';
+                            musicButton.classList.add('playing');
+                            isPlaying = true;
+                        }).catch((error) => {
+                            console.error('Audio play failed:', error);
+                            alert('Could not play audio. Error: ' + error.message);
+                        });
+                    }
+                }
+            });
+
+            // Reset button when song ends
+            backgroundMusic.addEventListener('ended', () => {
+                console.log('Song ended');
+                musicButton.innerHTML = '<span class="music-icon">🎵</span>';
+                musicButton.classList.remove('playing');
+                isPlaying = false;
+            });
+
+            // Set volume
+            backgroundMusic.volume = 0.3;
+
+            // Debug audio loading
+            backgroundMusic.addEventListener('loadstart', () => console.log('Audio loading started'));
+            backgroundMusic.addEventListener('canplay', () => console.log('Audio can start playing'));
+            backgroundMusic.addEventListener('error', (e) => console.error('Audio error:', e));
         });
     </script>
 </body>

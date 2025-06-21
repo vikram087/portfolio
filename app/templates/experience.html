@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="Work Experience - Vikram Penumarti">
+    <meta property="og:description" content="Professional journey and accomplishments">
+    <meta property="og:url" content="{{ url }}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/experience.css') }}">
+    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
+    <title>Work Experience - Vikram Penumarti</title>
+</head>
+
+<body>
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
+            </a>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">About</a>
+                <a href="/hobbies" class="nav-link">Hobbies</a>
+                <a href="/experience" class="nav-link active">Experience</a>
+                <a href="/education" class="nav-link">Education</a>
+                <a href="/travel" class="nav-link">Travel</a>
+            </nav>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Work Experience</h1>
+                <p class="hero-subtitle">Professional Journey & Impact</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number">{{ work_experiences|length }}</span>
+                        <span class="stat-label">Positions</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">2+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Companies</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Impact Made</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Timeline Section -->
+        <section class="experience-section">
+            <div class="container">
+                <div class="timeline-container">
+                    {% for job in work_experiences %}
+                    <article class="experience-item" data-status="{{ job.status }}">
+                        <div class="timeline-marker">
+                            <div class="marker-dot {{ job.status }}"></div>
+                            {% if not loop.last %}
+                            <div class="timeline-line"></div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="experience-card">
+                            <div class="job-header">
+                                <div class="job-status-badge {{ job.status }}">
+                                    {{ "Current" if job.status == "current" else "Completed" }}
+                                </div>
+                                
+                                <div class="job-main-info">
+                                    <h3 class="job-title">{{ job.title }}</h3>
+                                    <h4 class="job-company">{{ job.company }}</h4>
+                                    <div class="job-meta">
+                                        <span class="job-location">📍 {{ job.location }}</span>
+                                        <span class="job-date">📅 {{ job.date }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="job-highlight">
+                                    <div class="highlight-badge">
+                                        ⭐ {{ job.highlight }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="job-description">
+                                <h5 class="description-title">Key Achievements</h5>
+                                <ul class="achievement-list">
+                                    {% for bullet in job.description %}
+                                    <li class="achievement-item">
+                                        <span class="achievement-icon">🚀</span>
+                                        {{ bullet }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            <div class="job-impact">
+                                <div class="impact-metric">
+                                    <span class="impact-icon">📈</span>
+                                    <span class="impact-text">{{ job.impact }}</span>
+                                </div>
+                            </div>
+
+                            <div class="tech-stack-section">
+                                <h5 class="tech-title">Technologies Used</h5>
+                                <div class="tech-stack">
+                                    {% for tech in job.tech_stack %}
+                                    <span class="tech-tag {{ tech|lower|replace('.', '-')|replace(' ', '-') }}">{{ tech }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Summary Section -->
+        <section class="skills-section">
+            <div class="container">
+                <h2 class="section-title">Technical Skills & Expertise</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="category-title">🖥️ Frontend & Frameworks</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag frontend">Next.js</span>
+                            <span class="skill-tag frontend">React.js</span>
+                            <span class="skill-tag frontend">React Native</span>
+                            <span class="skill-tag frontend">HTML/CSS</span>
+                            <span class="skill-tag frontend">Concrete5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="category-title">⚙️ Backend & Databases</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag backend">Python</span>
+                            <span class="skill-tag backend">Flask</span>
+                            <span class="skill-tag backend">Elasticsearch</span>
+                            <span class="skill-tag backend">Redis</span>
+                            <span class="skill-tag backend">API Gateway</span>
+                            <span class="skill-tag backend">JWT</span>
+                            <span class="skill-tag backend">LDAP</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="category-title">☁️ Cloud & DevOps</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag cloud">AWS</span>
+                            <span class="skill-tag cloud">Docker</span>
+                            <span class="skill-tag cloud">Terraform</span>
+                            <span class="skill-tag cloud">Nginx</span>
+                            <span class="skill-tag cloud">Cloudflare R2</span>
+                            <span class="skill-tag cloud">Lambda</span>
+                            <span class="skill-tag cloud">S3</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="category-title">🤖 AI & Data</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag ai">Machine Learning</span>
+                            <span class="skill-tag ai">Deep Learning</span>
+                            <span class="skill-tag ai">LLMs</span>
+                            <span class="skill-tag ai">AI Analytics</span>
+                            <span class="skill-tag ai">PySpark</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="category-title">🔧 Systems & Infrastructure</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag systems">HPC</span>
+                            <span class="skill-tag systems">Slurm</span>
+                            <span class="skill-tag systems">SSH</span>
+                            <span class="skill-tag systems">NFS4</span>
+                            <span class="skill-tag systems">Bash</span>
+                            <span class="skill-tag systems">Rsync</span>
+                            <span class="skill-tag systems">FFmpeg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe experience items
+            document.querySelectorAll('.experience-item, .skill-category, .highlight-card').forEach(item => {
+                observer.observe(item);
+            });
+
+            // Progressive timeline animation
+            const timelineItems = document.querySelectorAll('.experience-item');
+            timelineItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('timeline-visible');
+                }, index * 200);
+            });
+        });
+
+        // Tech tag hover effects
+        document.querySelectorAll('.tech-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', () => {
+                tag.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            tag.addEventListener('mouseleave', () => {
+                tag.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Achievement list animations
+        document.querySelectorAll('.achievement-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>

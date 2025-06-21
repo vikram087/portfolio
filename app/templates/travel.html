@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="Travel Adventures - Vikram Penumarti">
+    <meta property="og:description" content="Places I've visited around the world">
+    <meta property="og:url" content="{{ url }}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/travel.css') }}">
+    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <title>Travel Adventures - Vikram Penumarti</title>
+</head>
+
+<body>
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
+            </a>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link">About</a>
+                <a href="/hobbies" class="nav-link">Hobbies</a>
+                <a href="/experience" class="nav-link">Experience</a>
+                <a href="/education" class="nav-link">Education</a>
+                <a href="/travel" class="nav-link active">Travel</a>
+            </nav>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Travel Adventures</h1>
+                <p class="hero-subtitle">Exploring the World, One Destination at a Time</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number">{{ travel_stats.countries }}</span>
+                        <span class="stat-label">Countries Visited</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">{{ travel_stats.continents }}</span>
+                        <span class="stat-label">Continents</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">{{ travel_stats.memories }}</span>
+                        <span class="stat-label">Memories Made</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Map Section -->
+        <section class="map-section">
+            <div class="container">
+                <div class="map-header">
+                    <h2 class="section-title">Interactive World Map</h2>
+                    <p class="section-subtitle">Click on the markers to explore each destination</p>
+                </div>
+                <div class="map-container">
+                    <div id="world-map"></div>
+                    <div class="map-controls">
+                        <button class="map-control-btn" onclick="resetMapView()">🌍 Reset View</button>
+                        <button class="map-control-btn" onclick="showAllMarkers()">📍 Show All</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Destinations Grid Section -->
+        <section class="destinations-section">
+            <div class="container">
+                <h2 class="section-title">Destinations Explored</h2>
+                <div class="destinations-grid">
+                    {% for place in travel_places %}
+                    <article class="destination-card" data-continent="{{ place.continent|lower }}" data-coords="{{ place.coords[0] }},{{ place.coords[1] }}">
+                        <div class="destination-header">
+                            <div class="destination-flag">
+                                {% if place.country == "Australia" %}🇦🇺
+                                {% elif place.country == "India" %}🇮🇳
+                                {% elif place.country == "Italy" %}🇮🇹
+                                {% elif place.country == "France" %}🇫🇷
+                                {% elif place.country == "USA" %}🇺🇸
+                                {% elif place.country == "Mexico" %}🇲🇽
+                                {% endif %}
+                            </div>
+                            <div class="destination-info">
+                                <h3 class="destination-name">{{ place.name }}</h3>
+                                <p class="destination-country">{{ place.country }}</p>
+                            </div>
+                            <div class="continent-badge {{ place.continent|lower|replace(' ', '-') }}">
+                                {{ place.continent }}
+                            </div>
+                        </div>
+                        
+                        <div class="destination-description">
+                            <p>{{ place.description }}</p>
+                        </div>
+                        
+                        {% if place.highlights and place.highlights|length >= 1 %}
+                        <div class="destination-highlights">
+                            <h4 class="highlights-title">✨ Highlights</h4>
+                            <div class="highlights-list">
+                                {% for highlight in place.highlights %}
+                                <span class="highlight-tag">{{ highlight }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <button class="locate-btn" onclick="flyToLocation({{ place.coords[0] }}, {{ place.coords[1] }}, '{{ place.name }}')">
+                            📍 View on Map
+                        </button>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Continent Breakdown Section -->
+        <section class="continents-section">
+            <div class="container">
+                <h2 class="section-title">Adventures by Continent</h2>
+                <div class="continents-grid">
+                    <div class="continent-card oceania">
+                        <div class="continent-icon">🏝️</div>
+                        <h3 class="continent-name">Oceania</h3>
+                        <div class="continent-countries">
+                            <span class="country-tag">Australia</span>
+                        </div>
+                        <p class="continent-description">Explored the cultural capital down under</p>
+                    </div>
+                    
+                    <div class="continent-card asia">
+                        <div class="continent-icon">🏛️</div>
+                        <h3 class="continent-name">Asia</h3>
+                        <div class="continent-countries">
+                            <span class="country-tag">India</span>
+                        </div>
+                        <p class="continent-description">Connected with family roots and rich heritage</p>
+                    </div>
+                    
+                    <div class="continent-card europe">
+                        <div class="continent-icon">🏰</div>
+                        <h3 class="continent-name">Europe</h3>
+                        <div class="continent-countries">
+                            <span class="country-tag">Italy</span>
+                            <span class="country-tag">France</span>
+                        </div>
+                        <p class="continent-description">Immersed in history, art, and cuisine</p>
+                    </div>
+                    
+                    <div class="continent-card north-america">
+                        <div class="continent-icon">🌆</div>
+                        <h3 class="continent-name">North America</h3>
+                        <div class="continent-countries">
+                            <span class="country-tag">USA</span>
+                            <span class="country-tag">Mexico</span>
+                        </div>
+                        <p class="continent-description">From Silicon Valley home to vibrant Mexico City</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Travel Plans Section -->
+        <section class="future-travel-section">
+            <div class="container">
+                <h2 class="section-title">Future Adventures</h2>
+                <div class="future-destinations">
+                    <div class="future-card">
+                        <div class="future-icon">🗾</div>
+                        <h4>Japan</h4>
+                        <p>Cherry blossoms, technology, and traditional culture</p>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🏔️</div>
+                        <h4>Switzerland</h4>
+                        <p>Alpine adventures and precision engineering</p>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🦘</div>
+                        <h4>New Zealand</h4>
+                        <p>Stunning landscapes and adventure sports</p>
+                    </div>
+                    <div class="future-card">
+                        <div class="future-icon">🏛️</div>
+                        <h4>Greece</h4>
+                        <p>Ancient history and Mediterranean beauty</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        // Mobile menu toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Initialize the map
+        let map;
+        let markers = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize map
+            map = L.map('world-map').setView([20, 0], 2);
+
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 18
+            }).addTo(map);
+
+            // Travel places data from Jinja
+            const places = {{ travel_places | tojson }};
+
+            // Add markers for each place
+            places.forEach((place, index) => {
+                const marker = L.marker(place.coords)
+                    .addTo(map)
+                    .bindPopup(`
+                        <div class="map-popup">
+                            <h3>${place.name}</h3>
+                            <strong>${place.country}</strong>
+                            <p>${place.description}</p>
+                            <div class="popup-highlights">
+                                ${place.highlights.map(h => `<span class="popup-highlight">${h}</span>`).join('')}
+                            </div>
+                        </div>
+                    `);
+                
+                markers.push(marker);
+                
+                // Add click event to destination cards
+                const card = document.querySelector(`[data-coords="${place.coords[0]},${place.coords[1]}"]`);
+                if (card) {
+                    card.addEventListener('click', () => {
+                        flyToLocation(place.coords[0], place.coords[1], place.name);
+                    });
+                }
+
+                // Animate marker appearance
+                setTimeout(() => {
+                    marker.getElement()?.classList.add('marker-animate');
+                }, index * 200);
+            });
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.destination-card, .continent-card, .philosophy-item, .future-card').forEach(item => {
+                observer.observe(item);
+            });
+
+            // Destination card hover effects
+            document.querySelectorAll('.destination-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Map control functions
+        function resetMapView() {
+            map.setView([20, 0], 2);
+        }
+
+        function showAllMarkers() {
+            const group = new L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
+
+        function flyToLocation(lat, lng, name) {
+            // First scroll to the map section smoothly
+            const mapSection = document.querySelector('.map-section');
+            mapSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+            
+            // Wait for scroll to complete, then animate map
+            setTimeout(() => {
+                map.flyTo([lat, lng], 10, {
+                    animate: true,
+                    duration: 1.5
+                });
+                
+                // Find and open the popup for this location
+                markers.forEach(marker => {
+                    const markerPos = marker.getLatLng();
+                    if (Math.abs(markerPos.lat - lat) < 0.001 && Math.abs(markerPos.lng - lng) < 0.001) {
+                        setTimeout(() => {
+                            marker.openPopup();
+                        }, 1600);
+                    }
+                });
+            }, 800); // Delay to allow scroll to complete
+        }
+
+        // Filter destinations by continent (for future functionality)
+        function filterByContinent(continent) {
+            const cards = document.querySelectorAll('.destination-card');
+            cards.forEach(card => {
+                if (continent === 'all' || card.dataset.continent === continent) {
+                    card.style.display = 'block';
+                    card.classList.add('animate-in');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

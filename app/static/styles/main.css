@@ -103,6 +103,248 @@ body {
 	font-weight: 700;
 }
 
+.hobbies-section {
+	max-width: 1000px;
+	margin: 0 auto 50px auto;
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 8px 25px rgba(29, 83, 159, 0.1);
+	overflow: hidden;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hobbies-section:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 35px rgba(29, 83, 159, 0.15);
+}
+
+.hobbies-header {
+	background: linear-gradient(135deg, #1c539f 0%, #1d539f 100%);
+	color: white;
+	padding: 30px;
+	text-align: center;
+	position: relative;
+}
+
+.hobbies-header::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #4caf50, #2196f3, #ff9800, #e91e63);
+}
+
+.hobbies-title {
+	font-size: 2.2rem;
+	font-weight: 700;
+	margin: 0 0 10px 0;
+	font-family: "Roboto", serif;
+}
+
+.hobbies-subtitle {
+	font-size: 1.1rem;
+	opacity: 0.9;
+	font-weight: 300;
+	margin: 0;
+	font-family: "Roboto", serif;
+}
+
+.hobbies-content {
+	padding: 40px;
+}
+
+.hobbies-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 25px;
+	margin-top: 20px;
+}
+
+.hobby-card {
+	background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+	border-radius: 15px;
+	padding: 30px 25px;
+	text-align: center;
+	border: 2px solid transparent;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.hobby-card::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(
+		135deg,
+		transparent 0%,
+		rgba(28, 83, 159, 0.02) 100%
+	);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.hobby-card:hover {
+	transform: translateY(-8px);
+	border-color: #1c539f;
+	box-shadow: 0 15px 30px rgba(28, 83, 159, 0.15);
+}
+
+.hobby-card:hover::before {
+	opacity: 1;
+}
+
+.hobby-icon {
+	width: 80px;
+	height: 80px;
+	margin: 0 auto 20px auto;
+	background: linear-gradient(135deg, #1c539f 0%, #1d539f 100%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2.5rem;
+	transition: transform 0.3s ease;
+	position: relative;
+	z-index: 1;
+}
+
+.hobby-card:hover .hobby-icon {
+	transform: scale(1.1) rotate(5deg);
+}
+
+.hobby-name {
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: #1c539f;
+	margin: 0 0 15px 0;
+	font-family: "Roboto", serif;
+	position: relative;
+	z-index: 1;
+}
+
+.hobby-description {
+	font-size: 1rem;
+	color: #666;
+	line-height: 1.6;
+	margin: 0;
+	font-family: "Roboto", serif;
+	position: relative;
+	z-index: 1;
+}
+
+/* Specific hobby card colors */
+.hobby-card.soccer {
+	border-left: 4px solid #4caf50;
+}
+
+.hobby-card.soccer:hover {
+	border-color: #4caf50;
+}
+
+.hobby-card.soccer .hobby-icon {
+	background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+}
+
+.hobby-card.skiing {
+	border-left: 4px solid #2196f3;
+}
+
+.hobby-card.skiing:hover {
+	border-color: #2196f3;
+}
+
+.hobby-card.skiing .hobby-icon {
+	background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+}
+
+.hobby-card.gym {
+	border-left: 4px solid #ff9800;
+}
+
+.hobby-card.gym:hover {
+	border-color: #ff9800;
+}
+
+.hobby-card.gym .hobby-icon {
+	background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+}
+
+.hobby-card.coding {
+	border-left: 4px solid #e91e63;
+}
+
+.hobby-card.coding:hover {
+	border-color: #e91e63;
+}
+
+.hobby-card.coding .hobby-icon {
+	background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.hobbies-section {
+		margin: 0 20px 50px 20px;
+	}
+
+	.hobbies-content {
+		padding: 30px 25px;
+	}
+
+	.hobbies-grid {
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 20px;
+	}
+
+	.hobby-card {
+		padding: 25px 20px;
+	}
+
+	.hobby-icon {
+		width: 70px;
+		height: 70px;
+		font-size: 2.2rem;
+	}
+
+	.hobbies-title {
+		font-size: 1.8rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.hobbies-header {
+		padding: 25px 20px;
+	}
+
+	.hobbies-content {
+		padding: 25px 15px;
+	}
+
+	.hobbies-grid {
+		grid-template-columns: 1fr;
+		gap: 15px;
+	}
+
+	.hobby-card {
+		padding: 20px 15px;
+	}
+
+	.hobby-icon {
+		width: 60px;
+		height: 60px;
+		font-size: 2rem;
+	}
+
+	.hobby-name {
+		font-size: 1.2rem;
+	}
+}
 .about-section {
 	max-width: 800px;
 	margin: 0 auto 50px auto;

@@ -16,7 +16,7 @@
 
     <link lang='sass' rel="stylesheet" href="../static/styles/main.css">
     <link rel='icon' href='../static/img/favicon.ico' type='image/x-icon' />
-    <title>{{ title }}</title>
+    <title>Vikram Penumarti</title>
 </head>
 
 <body>
@@ -104,6 +104,102 @@
                     </p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="experience-section">
+        <div class="experience-header">
+            <h2 class="experience-title">Work Experience</h2>
+            <p class="experience-subtitle">Professional Journey & Impact</p>
+        </div>
+        <div class="experience-content">
+            
+            <div class="experience-item">
+                <div class="job-status current">Current</div>
+                <div class="job-header">
+                    <div>
+                        <h3 class="job-title">Software Engineer</h3>
+                        <h4 class="job-company">Garde</h4>
+                        <p class="job-location">Davis, CA</p>
+                    </div>
+                    <div class="job-date">October 2023 – Present</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Created sports analytics platform that provided AI match analysis & feedback for 30+ users.</li>
+                        <li>Integrated video processing pipeline with FFmpeg transcoding, Cloudflare R2 storage, & HTTPS live streaming, capable of processing 30 minute videos in 2 minutes.</li>
+                        <li>Produced Next.js frontend for video streaming with seamless user experience.</li>
+                        <li>Implemented Next.js full-stack user auth from scratch, using JWT tokens for sessions & Cloudflare D1 for storage.</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">FFmpeg</span>
+                        <span class="tech-tag">Cloudflare R2</span>
+                        <span class="tech-tag">JWT</span>
+                        <span class="tech-tag">AI Analytics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="job-status current">Current</div>
+                <div class="job-header">
+                    <div>
+                        <h3 class="job-title">Software Engineer</h3>
+                        <h4 class="job-company">Institute for Complex Adaptive Matter</h4>
+                        <p class="job-location">Davis, CA</p>
+                    </div>
+                    <div class="job-date">January 2024 – Present</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Architected a searchable materials science paper database with AI vector search, sorting, filters, & pagination.</li>
+                        <li>Created AI-powered data processing pipeline capable of handling 1,000 docs/min, using Python to query papers from ArXiv, MatbertNer to add NLP analysis, & Elasticsearch to store documents.</li>
+                        <li>Modeled Flask backend using AI vector search with sentence transformer embeddings. Capable of searching 50,000+ documents in <3 seconds, improved to <1 second for cached documents in Redis.</li>
+                        <li>Utilized Docker Compose to orchestrate containers, enabling seamless deployment across environments.</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">React.js</span>
+                        <span class="tech-tag">AI/ML</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="job-status past">Past</div>
+                <div class="job-header">
+                    <div>
+                        <h3 class="job-title">R&D Intern</h3>
+                        <h4 class="job-company">Fiery LLC</h4>
+                        <p class="job-location">Fremont, CA</p>
+                    </div>
+                    <div class="job-date">June 2024 – September 2024</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Developed ETL pipelines on AWS to ingest, normalize, & visualize data.</li>
+                        <li>Used Terraform to setup S3 Buckets, Quicksight, Glue, Cloudwatch, Lambda Functions, & API Gateways.</li>
+                        <li>Designed API Gateway with Python Lambda functions to upload files & verify their existence on S3.</li>
+                        <li>Built PySpark script in AWS Glue to validate JSON schemas & normalize multi-client data in <1 minute, a 66% runtime improvement.</li>
+                        <li>Utilized Python testing scripts, boasting 100% test coverage on Pyspark scripts & Lambda functions.</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Terraform</span>
+                        <span class="tech-tag">PySpark</span>
+                        <span class="tech-tag">Lambda</span>
+                        <span class="tech-tag">S3</span>
+                        <span class="tech-tag">API Gateway</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

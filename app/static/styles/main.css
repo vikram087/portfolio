@@ -1,97 +1,362 @@
-p, h1, h2, h3, h4, h5, h6, button {
-    font-family: "Roboto", serif;
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+	font-family: "Roboto", serif;
 }
 
 body {
-    background-color: #f5f5f9;
-    background-size: cover;
-    width: auto; 
-    overflow-x: hidden;
-    font-family: "Roboto", serif;
-    margin: 0px;
+	background-color: #f5f5f9;
+	background-size: cover;
+	width: auto;
+	overflow-x: hidden;
+	font-family: "Roboto", serif;
+	margin: 0px;
 }
 
 .nav-bar {
-    width: 100%;
-    display: inline-block;
-    background-color: #1C539F;
-    font-family: "Roboto", serif;
-    font-weight: 700 !important;
-    padding-top: 10px;
+	width: 100%;
+	display: inline-block;
+	background-color: #1c539f;
+	font-family: "Roboto", serif;
+	font-weight: 700 !important;
+	padding-top: 10px;
 }
 
 .nav-content .logo-touch-target {
-    display: inline-flex;
-    height: 60%;
-    width: 350px;
+	display: inline-flex;
+	height: 60%;
+	width: 350px;
 }
 
 .nav-content .nav-logo {
-    height: 60px;
-    margin: auto;
+	height: 60px;
+	margin: auto;
 }
 
 .nav-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .nav-logo img {
-    width: 200px;
+	width: 200px;
 }
 
 .nav-content nav {
-    display: block;
-    width: 100%;
-    text-align: right;
-    padding-top: 0px;
-    padding-right: 0px;
+	display: block;
+	width: 100%;
+	text-align: right;
+	padding-top: 0px;
+	padding-right: 0px;
 }
 
 .profile {
-    background-color: #1d539f !important;
-    text-align: center;
-    height: 320px;
-    margin-bottom: 50px;
+	background-color: #1d539f !important;
+	text-align: center;
+	height: 320px;
+	margin-bottom: 50px;
 }
 
 .profile h1 {
-        font-size: 50px;
-        font-weight: 700;
-        color: white;
+	font-size: 50px;
+	font-weight: 700;
+	color: white;
 }
 
 .profile img {
-        border-radius: 50%;
-        max-width: 100%;
-        max-height: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;        
-        padding: 20px;
+	border-radius: 50%;
+	max-width: 100%;
+	max-height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	padding: 20px;
 }
 
 .profile .profile-picture {
-    margin-bottom: 30px;
-    height: 200px;
+	margin-bottom: 30px;
+	height: 200px;
 }
 
 .banner {
-    padding: 20px 0px 50px 0px;
-    height: 150px;
-    background-color: #1d539f;
+	padding: 20px 0px 50px 0px;
+	height: 150px;
+	background-color: #1d539f;
 }
 
 .banner .logo {
-    max-width:180px;
-    max-height:60px;
-    width: auto;
-    height: auto;
+	max-width: 180px;
+	max-height: 60px;
+	width: auto;
+	height: auto;
 }
 
 .banner .title {
-    color: white;
-    font-size: 50px;
-    font-weight: 700;
+	color: white;
+	font-size: 50px;
+	font-weight: 700;
+}
+
+/* Work Experience Section CSS - Add to your main.css */
+
+.experience-section {
+	max-width: 1000px;
+	margin: 0 auto 50px auto;
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 8px 25px rgba(29, 83, 159, 0.1);
+	overflow: hidden;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.experience-section:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 35px rgba(29, 83, 159, 0.15);
+}
+
+.experience-header {
+	background: linear-gradient(135deg, #1c539f 0%, #1d539f 100%);
+	color: white;
+	padding: 30px;
+	text-align: center;
+	position: relative;
+}
+
+.experience-header::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, #4caf50, #2196f3, #ff9800, #e91e63);
+}
+
+.experience-title {
+	font-size: 2.2rem;
+	font-weight: 700;
+	margin: 0 0 10px 0;
+	font-family: "Roboto", serif;
+}
+
+.experience-subtitle {
+	font-size: 1.1rem;
+	opacity: 0.9;
+	font-weight: 300;
+	margin: 0;
+	font-family: "Roboto", serif;
+}
+
+.experience-content {
+	padding: 40px;
+}
+
+.experience-item {
+	background: #f8f9fa;
+	border-radius: 12px;
+	padding: 30px;
+	margin-bottom: 25px;
+	border-left: 4px solid #1c539f;
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.experience-item:hover {
+	transform: translateX(5px);
+	box-shadow: 0 5px 15px rgba(28, 83, 159, 0.1);
+}
+
+.experience-item:last-child {
+	margin-bottom: 0;
+}
+
+.job-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-bottom: 15px;
+	flex-wrap: wrap;
+}
+
+.job-title {
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: #1c539f;
+	margin: 0;
+	font-family: "Roboto", serif;
+}
+
+.job-company {
+	font-size: 1.2rem;
+	font-weight: 500;
+	color: #333;
+	margin: 5px 0 0 0;
+	font-family: "Roboto", serif;
+}
+
+.job-date {
+	font-size: 1rem;
+	color: #666;
+	font-weight: 500;
+	background: white;
+	padding: 8px 15px;
+	border-radius: 20px;
+	border: 1px solid #e0e0e0;
+	white-space: nowrap;
+	font-family: "Roboto", serif;
+}
+
+.job-location {
+	font-size: 0.95rem;
+	color: #888;
+	font-style: italic;
+	margin: 5px 0 0 0;
+	font-family: "Roboto", serif;
+}
+
+.job-description {
+	margin-top: 20px;
+}
+
+.job-description ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.job-description li {
+	font-size: 1rem;
+	line-height: 1.6;
+	color: #444;
+	margin-bottom: 12px;
+	padding-left: 25px;
+	position: relative;
+	font-family: "Roboto", serif;
+}
+
+.job-description li::before {
+	content: "▶";
+	color: #1c539f;
+	font-size: 0.8rem;
+	position: absolute;
+	left: 0;
+	top: 3px;
+}
+
+.job-description li:last-child {
+	margin-bottom: 0;
+}
+
+/* Tech stack tags */
+.tech-stack {
+	margin-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.tech-tag {
+	background: linear-gradient(135deg, #1c539f, #1d539f);
+	color: white;
+	padding: 5px 12px;
+	border-radius: 15px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	font-family: "Roboto", serif;
+}
+
+/* Status indicator for current/past roles */
+.job-status {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	padding: 5px 12px;
+	border-radius: 12px;
+	font-size: 0.8rem;
+	font-weight: 600;
+	font-family: "Roboto", serif;
+}
+
+.job-status.current {
+	background: #e8f5e8;
+	color: #4caf50;
+	border: 1px solid #4caf50;
+}
+
+.job-status.past {
+	background: #f0f0f0;
+	color: #666;
+	border: 1px solid #ccc;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.experience-section {
+		margin: 0 20px 50px 20px;
+	}
+
+	.experience-content {
+		padding: 30px 25px;
+	}
+
+	.experience-item {
+		padding: 25px 20px;
+	}
+
+	.job-header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.job-date {
+		margin-top: 10px;
+		align-self: flex-start;
+	}
+
+	.job-status {
+		position: static;
+		margin-top: 10px;
+		align-self: flex-start;
+	}
+
+	.experience-title {
+		font-size: 1.8rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.experience-header {
+		padding: 25px 20px;
+	}
+
+	.experience-content {
+		padding: 25px 15px;
+	}
+
+	.experience-item {
+		padding: 20px 15px;
+	}
+
+	.job-title {
+		font-size: 1.2rem;
+	}
+
+	.job-company {
+		font-size: 1.1rem;
+	}
+
+	.tech-stack {
+		margin-top: 15px;
+	}
+
+	.tech-tag {
+		font-size: 0.8rem;
+		padding: 4px 10px;
+	}
 }

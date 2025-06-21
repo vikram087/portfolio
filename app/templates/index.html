@@ -14,9 +14,9 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
 
-    <link lang='sass' rel="stylesheet" href="./static/styles/main.css">
-    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
-    <title>{{ title }}</title>
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
+    <title>Vikram Penumarti</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
         <div class="nav-content">
             <a href="/">
                 <div class="nav-logo">
-                    <img src="./static/img/logo.svg" />
+                    <img src="{{ url_for('static', filename='img/logo.svg') }}" />
                 </div>
             </a>
         </div>
@@ -32,9 +32,203 @@
 
     <div class="profile">
         <div id="profile-picture" class="profile-picture">
-            <img src="./static/img/logo.jpg">
+            <img src="{{ url_for('static', filename='img/Headshot.jpg') }}">
         </div>
         <h1>{{ title }}</h1>
     </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <div class="about-header">
+            <h2 class="about-title">About Me</h2>
+            <p class="about-subtitle">Student • Developer • Innovator</p>
+        </div>
+        <div class="about-content">
+            <p class="about-text">
+                Hi, I'm <span class="highlight">Vikram</span>, a third year <span class="highlight">computer science major</span> at <span class="school-highlight">UC Davis</span>. I'm passionate about technology and building solutions that make a difference.
+            </p>
+            
+            <div class="about-stats">
+                <div class="stat-card">
+                    <span class="stat-number">3rd</span>
+                    <span class="stat-label">Year Student</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">CS</span>
+                    <span class="stat-label">Major</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">UC</span>
+                    <span class="stat-label">Davis</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hobbies Section with Jinja -->
+    <div class="hobbies-section">
+        <div class="hobbies-header">
+            <h2 class="hobbies-title">Hobbies & Interests</h2>
+            <p class="hobbies-subtitle">What I Love Doing in My Free Time</p>
+        </div>
+        <div class="hobbies-content">
+            <div class="hobbies-grid">
+                {% for hobby in hobbies_list %}
+                <div class="hobby-card {{ hobby.class }}">
+                    <div class="hobby-icon">{{ hobby.icon }}</div>
+                    <h3 class="hobby-name">{{ hobby.name }}</h3>
+                    <img src="{{ hobby.image }}" alt="{{ hobby.name }}" class="hobby-image">
+                    <p class="hobby-description">
+                        {{ hobby.description }}
+                    </p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Work Experience Section with Jinja -->
+    <div class="experience-section">
+        <div class="experience-header">
+            <h2 class="experience-title">Work Experience</h2>
+            <p class="experience-subtitle">Professional Journey & Impact</p>
+        </div>
+        <div class="experience-content">
+            {% for job in work_experiences %}
+            <div class="experience-item">
+                <div class="job-status {{ job.status }}">{{ job.status.title() }}</div>
+                <div class="job-header">
+                    <div>
+                        <h3 class="job-title">{{ job.title }}</h3>
+                        <h4 class="job-company">{{ job.company }}</h4>
+                        <p class="job-location">{{ job.location }}</p>
+                    </div>
+                    <div class="job-date">{{ job.date }}</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        {% for bullet in job.description %}
+                        <li>{{ bullet }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tech-stack">
+                        {% for tech in job.tech_stack %}
+                        <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Education Section with Jinja -->
+    <div class="education-section">
+        <div class="education-header">
+            <h2 class="education-title">Education</h2>
+            <p class="education-subtitle">Academic Journey & Learning</p>
+        </div>
+        <div class="education-content">
+            {% for education in education_list %}
+            <div class="education-item">
+                {% if education.status == "current" %}
+                <div class="education-status">Current</div>
+                {% endif %}
+                
+                <div class="school-header">
+                    <div class="school-info">
+                        <h3 class="school-name">
+                            <span class="school-icon">{{ education.icon }}</span>
+                            {{ education.school_name }}
+                        </h3>
+                        <h4 class="degree-info">{{ education.degree }}</h4>
+                        <p class="school-location">{{ education.location }}</p>
+                    </div>
+                    <div class="school-date">{{ education.date }}</div>
+                </div>
+
+                {% if education.gpa %}
+                <div class="gpa-section">
+                    <div class="gpa-item">
+                        <span class="gpa-value">{{ education.gpa.overall }}</span>
+                        <span class="gpa-label">Overall GPA</span>
+                    </div>
+                    <div class="gpa-item">
+                        <span class="gpa-value">{{ education.gpa.engineering }}</span>
+                        <span class="gpa-label">Engineering GPA</span>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if education.coursework %}
+                <div class="coursework-section">
+                    <h4 class="coursework-title">Relevant Coursework</h4>
+                    <div class="coursework-grid">
+                        {% for course in education.coursework %}
+                        <span class="course-tag {{ course.category }}">{{ course.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if education.achievements %}
+                <div class="achievements-section">
+                    <h4 class="achievements-title">
+                        {% if education.status == "current" %}Academic Highlights{% else %}High School Achievements{% endif %}
+                    </h4>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Map Section with Jinja -->
+    <div class="map-section">
+        <div class="map-header">
+            <h2 class="map-title">Places I've Visited</h2>
+            <p class="map-subtitle">Adventures Around the World</p>
+        </div>
+        <div class="map-content">
+            <div id="world-map"></div>
+        </div>
+        
+        <div class="travel-stats">
+            <h3>Travel Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">{{ travel_stats.countries }}</span>
+                    <span class="stat-label">Countries Visited</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ travel_stats.continents }}</span>
+                    <span class="stat-label">Continents</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ travel_stats.memories }}</span>
+                    <span class="stat-label">Memories Made</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        const map = L.map('world-map').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        // Use Jinja to pass data to JavaScript
+        const places = {{ travel_places | tojson }};
+
+        places.forEach(place => {
+            L.marker(place.coords)
+                .addTo(map)
+                .bindPopup(place.name);
+        });
+    </script>
 </body>
 </html>

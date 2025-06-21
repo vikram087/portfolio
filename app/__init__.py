@@ -18,7 +18,7 @@ hobbies_list = [
         "details": {
             "experience": "10+ years",
             "favorite_team": "FC Barcelona",
-            "position": "Attacker",
+            "position": "Winger",
         },
     },
     {
@@ -29,7 +29,7 @@ hobbies_list = [
         "description": "There's nothing like carving down fresh powder! Skiing combines my love for adventure, nature, and adrenaline. The mountains provide the perfect escape from the digital world.",
         "details": {
             "experience": "10+ years",
-            "skill_level": "Advanced",
+            "skill_level": "◆◆",
             "favorite_resort": "Palisades",
         },
     },
@@ -41,6 +41,7 @@ hobbies_list = [
         "description": "Staying strong and healthy is a priority. The gym helps me maintain physical fitness, mental clarity, and provides a great way to challenge myself and set new personal records.",
         "details": {
             "experience": "4 years",
+            "favorite_lift": "Bench Press",
         },
     },
 ]

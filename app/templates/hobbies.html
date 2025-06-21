@@ -100,13 +100,19 @@
                                         {% if hobby.details.skill_level %}
                                         <div class="hobby-stat">
                                             <span class="stat-label">Level</span>
-                                            <span class="stat-value">{{ hobby.details.skill_level }}</span>
+                                            <span class="stat-value skill-level">{{ hobby.details.skill_level }}</span>
                                         </div>
                                         {% endif %}
-                                        {% if hobby.details.frequency %}
+                                        {% if hobby.details.favorite_lift %}
                                         <div class="hobby-stat">
-                                            <span class="stat-label">Frequency</span>
-                                            <span class="stat-value">{{ hobby.details.frequency }}</span>
+                                            <span class="stat-label">Favorite Lift</span>
+                                            <span class="stat-value">{{ hobby.details.favorite_lift }}</span>
+                                        </div>
+                                        {% endif %}
+                                         {% if hobby.details.position %}
+                                        <div class="hobby-stat">
+                                            <span class="stat-label">Position</span>
+                                            <span class="stat-value">{{ hobby.details.position }}</span>
                                         </div>
                                         {% endif %}
                                     </div>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="{% block page_title %}Vikram Penumarti{% endblock %}">
+    <meta property="og:description" content="{% block page_description %}Portfolio and personal website{% endblock %}">
+    <meta property="og:url" content="{{ url }}">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Base CSS -->
+    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    
+    <!-- Page-specific CSS -->
+    {% block extra_css %}{% endblock %}
+    
+    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
+    <title>{% block title %}Vikram Penumarti{% endblock %}</title>
+</head>
+
+<body>
+    <!-- Navigation Bar - Always Present -->
+    <header class="nav-bar">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
+            </a>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">About</a>
+                <a href="/hobbies" class="nav-link {% if request.endpoint == 'hobbies' %}active{% endif %}">Hobbies</a>
+                <a href="/experience" class="nav-link {% if request.endpoint == 'experience' %}active{% endif %}">Experience</a>
+                <a href="/education" class="nav-link {% if request.endpoint == 'education' %}active{% endif %}">Education</a>
+                <a href="/travel" class="nav-link {% if request.endpoint == 'travel' %}active{% endif %}">Travel</a>
+                <a href="/timeline" class="nav-link {% if request.endpoint == 'timeline' %}active{% endif %}">Timeline</a>
+            </nav>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer (optional) -->
+    {% block footer %}
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 Vikram Penumarti. All rights reserved.</p>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <!-- Base JavaScript -->
+    <script>
+        // Mobile menu toggle - Available on all pages
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        }
+    </script>
+    
+    <!-- Page-specific JavaScript -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

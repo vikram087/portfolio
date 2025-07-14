@@ -1,239 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Hobbies & Interests - Vikram Penumarti">
-    <meta property="og:description" content="Explore my hobbies and interests">
-    <meta property="og:url" content="{{ url }}">
+{% block title %}Hobbies & Interests - Vikram Penumarti{% endblock %}
+{% block page_title %}Hobbies & Interests - Vikram Penumarti{% endblock %}
+{% block page_description %}Explore my hobbies and interests{% endblock %}
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
+{% block extra_css %}
+<link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/hobbies.css') }}">
+{% endblock %}
 
-    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/hobbies.css') }}">
-    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
-    <title>Hobbies & Interests - Vikram Penumarti</title>
-</head>
-
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/" class="nav-logo">
-                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
-            </a>
-            <nav class="nav-menu">
-                <a href="/" class="nav-link">About</a>
-                <a href="/hobbies" class="nav-link active">Hobbies</a>
-                <a href="/experience" class="nav-link">Experience</a>
-                <a href="/education" class="nav-link">Education</a>
-                <a href="/travel" class="nav-link">Travel</a>
-            </nav>
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Hobbies & Interests</h1>
+        <p class="hero-subtitle">What I Love Doing in My Free Time</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="stat-number">{{ hobbies_list|length }}</span>
+                <span class="stat-label">Main Hobbies</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-number">25+</span>
+                <span class="stat-label">Years Combined Experience</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Passion Level</span>
             </div>
         </div>
-    </header>
+    </div>
+</section>
 
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">Hobbies & Interests</h1>
-                <p class="hero-subtitle">What I Love Doing in My Free Time</p>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="stat-number">{{ hobbies_list|length }}</span>
-                        <span class="stat-label">Main Hobbies</span>
+<!-- Hobbies Grid Section -->
+<section class="hobbies-section">
+    <div class="container">
+        <div class="hobbies-grid">
+            {% for hobby in hobbies_list %}
+            <article class="hobby-card {{ hobby.class }}" data-hobby="{{ hobby.name.lower() }}">
+                <div class="hobby-card-inner">
+                    <!-- Front of card -->
+                    <div class="hobby-card-front">
+                        <div class="hobby-image-container">
+                            <img src="{{ hobby.image }}" alt="{{ hobby.name }}" class="hobby-image">
+                            <div class="hobby-overlay">
+                                <div class="hobby-icon">{{ hobby.icon }}</div>
+                                <h3 class="hobby-name">{{ hobby.name }}</h3>
+                            </div>
+                        </div>
                     </div>
-                    <div class="hero-stat">
-                        <span class="stat-number">25+</span>
-                        <span class="stat-label">Years Combined Experience</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="stat-number">∞</span>
-                        <span class="stat-label">Passion Level</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Hobbies Grid Section -->
-        <section class="hobbies-section">
-            <div class="container">
-                <div class="hobbies-grid">
-                    {% for hobby in hobbies_list %}
-                    <article class="hobby-card {{ hobby.class }}" data-hobby="{{ hobby.name.lower() }}">
-                        <div class="hobby-card-inner">
-                            <!-- Front of card -->
-                            <div class="hobby-card-front">
-                                <div class="hobby-image-container">
-                                    <img src="{{ hobby.image }}" alt="{{ hobby.name }}" class="hobby-image">
-                                    <div class="hobby-overlay">
-                                        <div class="hobby-icon">{{ hobby.icon }}</div>
-                                        <h3 class="hobby-name">{{ hobby.name }}</h3>
-                                    </div>
-                                </div>
+                    
+                    <!-- Back of card -->
+                    <div class="hobby-card-back">
+                        <div class="hobby-details">
+                            <div class="hobby-header">
+                                <span class="hobby-icon-large">{{ hobby.icon }}</span>
+                                <h3 class="hobby-title">{{ hobby.name }}</h3>
                             </div>
                             
-                            <!-- Back of card -->
-                            <div class="hobby-card-back">
-                                <div class="hobby-details">
-                                    <div class="hobby-header">
-                                        <span class="hobby-icon-large">{{ hobby.icon }}</span>
-                                        <h3 class="hobby-title">{{ hobby.name }}</h3>
-                                    </div>
-                                    
-                                    <p class="hobby-description">{{ hobby.description }}</p>
-                                    
-                                    <div class="hobby-stats">
-                                        <div class="hobby-stat">
-                                            <span class="stat-label">Experience</span>
-                                            <span class="stat-value">{{ hobby.details.experience }}</span>
-                                        </div>
-                                        {% if hobby.details.skill_level %}
-                                        <div class="hobby-stat">
-                                            <span class="stat-label">Level</span>
-                                            <span class="stat-value skill-level">{{ hobby.details.skill_level }}</span>
-                                        </div>
-                                        {% endif %}
-                                        {% if hobby.details.favorite_lift %}
-                                        <div class="hobby-stat">
-                                            <span class="stat-label">Favorite Lift</span>
-                                            <span class="stat-value">{{ hobby.details.favorite_lift }}</span>
-                                        </div>
-                                        {% endif %}
-                                         {% if hobby.details.position %}
-                                        <div class="hobby-stat">
-                                            <span class="stat-label">Position</span>
-                                            <span class="stat-value">{{ hobby.details.position }}</span>
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                    
-                                    {% if hobby.details.favorite_team or hobby.details.favorite_resort %}
-                                    <div class="hobby-extras">
-                                        {% if hobby.details.favorite_team %}
-                                        <div class="extra-detail">
-                                            <strong>Favorite Team:</strong> {{ hobby.details.favorite_team }}
-                                        </div>
-                                        {% endif %}
-                                        {% if hobby.details.favorite_resort %}
-                                        <div class="extra-detail">
-                                            <strong>Favorite Resort:</strong> {{ hobby.details.favorite_resort }}
-                                        </div>
-                                        {% endif %}
-                                        {% if hobby.details.focus %}
-                                        <div class="extra-detail">
-                                            <strong>Focus:</strong> {{ hobby.details.focus }}
-                                        </div>
-                                        {% endif %}
-                                        {% if hobby.details.position %}
-                                        <div class="extra-detail">
-                                            <strong>Position:</strong> {{ hobby.details.position }}
-                                        </div>
-                                        {% endif %}
-                                    </div>
-                                    {% endif %}
+                            <p class="hobby-description">{{ hobby.description }}</p>
+                            
+                            <div class="hobby-stats">
+                                <div class="hobby-stat">
+                                    <span class="stat-label">Experience</span>
+                                    <span class="stat-value">{{ hobby.details.experience }}</span>
                                 </div>
+                                {% if hobby.details.skill_level %}
+                                <div class="hobby-stat">
+                                    <span class="stat-label">Level</span>
+                                    <span class="stat-value skill-level">{{ hobby.details.skill_level }}</span>
+                                </div>
+                                {% endif %}
+                                {% if hobby.details.favorite_lift %}
+                                <div class="hobby-stat">
+                                    <span class="stat-label">Favorite Lift</span>
+                                    <span class="stat-value">{{ hobby.details.favorite_lift }}</span>
+                                </div>
+                                {% endif %}
+                                 {% if hobby.details.position %}
+                                <div class="hobby-stat">
+                                    <span class="stat-label">Position</span>
+                                    <span class="stat-value">{{ hobby.details.position }}</span>
+                                </div>
+                                {% endif %}
                             </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-
-        <!-- Fun Facts Section -->
-        <section class="fun-facts-section">
-            <div class="container">
-                <h2 class="section-title">Fun Facts</h2>
-                <div class="facts-grid">
-                    <div class="fact-card">
-                        <div class="fact-icon">⚽</div>
-                        <div class="fact-content">
-                            <h4>Soccer Enthusiast</h4>
-                            <p>Playing for over 10 years and still going strong!</p>
+                            
+                            {% if hobby.details.favorite_team or hobby.details.favorite_resort %}
+                            <div class="hobby-extras">
+                                {% if hobby.details.favorite_team %}
+                                <div class="extra-detail">
+                                    <strong>Favorite Team:</strong> {{ hobby.details.favorite_team }}
+                                </div>
+                                {% endif %}
+                                {% if hobby.details.favorite_resort %}
+                                <div class="extra-detail">
+                                    <strong>Favorite Resort:</strong> {{ hobby.details.favorite_resort }}
+                                </div>
+                                {% endif %}
+                                {% if hobby.details.focus %}
+                                <div class="extra-detail">
+                                    <strong>Focus:</strong> {{ hobby.details.focus }}
+                                </div>
+                                {% endif %}
+                                {% if hobby.details.position %}
+                                <div class="extra-detail">
+                                    <strong>Position:</strong> {{ hobby.details.position }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="fact-card">
-                        <div class="fact-icon">🏔️</div>
-                        <div class="fact-content">
-                            <h4>Mountain Lover</h4>
-                            <p>Palisades is my go-to resort for the best skiing experience.</p>
-                        </div>
-                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Fun Facts Section -->
+<section class="fun-facts-section">
+    <div class="container">
+        <h2 class="section-title">Fun Facts</h2>
+        <div class="facts-grid">
+            <div class="fact-card">
+                <div class="fact-icon">⚽</div>
+                <div class="fact-content">
+                    <h4>Soccer Enthusiast</h4>
+                    <p>Playing for over 10 years and still going strong!</p>
                 </div>
             </div>
-        </section>
-    </main>
+            <div class="fact-card">
+                <div class="fact-icon">🏔️</div>
+                <div class="fact-content">
+                    <h4>Mountain Lover</h4>
+                    <p>Palisades is my go-to resort for the best skiing experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
 
-    <script>
-        // Mobile menu toggle
-        const navToggle = document.querySelector('.nav-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
+{% block extra_js %}
+<script>
+    // Hobby cards flip animation
+    document.addEventListener('DOMContentLoaded', () => {
+        const hobbyCards = document.querySelectorAll('.hobby-card');
+        
+        hobbyCards.forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
             });
         });
 
-        // Hobby cards flip animation
-        document.addEventListener('DOMContentLoaded', () => {
-            const hobbyCards = document.querySelectorAll('.hobby-card');
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe hobby cards and fact cards
+        document.querySelectorAll('.hobby-card, .fact-card').forEach(card => {
+            observer.observe(card);
+        });
+    });
+
+    // Add hover effects for desktop
+    if (window.innerWidth > 768) {
+        document.querySelectorAll('.hobby-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('hovered');
+            });
             
-            hobbyCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    card.classList.toggle('flipped');
-                });
-            });
-
-            // Intersection Observer for scroll animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                    }
-                });
-            }, observerOptions);
-
-            // Observe hobby cards and fact cards
-            document.querySelectorAll('.hobby-card, .fact-card').forEach(card => {
-                observer.observe(card);
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('hovered');
             });
         });
-
-        // Add hover effects for desktop
-        if (window.innerWidth > 768) {
-            document.querySelectorAll('.hobby-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.classList.add('hovered');
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.classList.remove('hovered');
-                });
-            });
-        }
-    </script>
-</body>
-</html>
+    }
+</script>
+{% endblock %}

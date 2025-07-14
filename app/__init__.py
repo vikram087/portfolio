@@ -359,6 +359,11 @@ def travel():
     )
 
 
+@app.route("/timeline")
+def timeline():
+    return render_template("timeline.html", title="Timeline")
+
+
 @app.route("/hobbies/<hobby_name>")
 def hobby_detail(hobby_name):
     """Individual hobby detail page"""

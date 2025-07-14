@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Timeline - Vikram Penumarti{% endblock %}
+{% block page_title %}Timeline - Vikram Penumarti{% endblock %}
+{% block page_description %}Timeline and visitor posts{% endblock %}
+
+{% block extra_css %}
+<link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/timeline.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Timeline</h1>
+        <p class="hero-subtitle">Messages & Posts from Visitors</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="stat-number" id="post-count">0</span>
+                <span class="stat-label">Total Posts</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-number" id="recent-count">0</span>
+                <span class="stat-label">This Week</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Posts Section -->
+<section class="timeline-section">
+    <div class="container">
+        <h2 class="section-title">Posts</h2>
+        <div class="timeline-container">
+            <div id="timeline-posts" class="timeline-posts">
+                <!-- Posts will be loaded here dynamically -->
+                <div class="loading-posts">
+                    <div class="loading-spinner"></div>
+                    <p>Loading posts...</p>
+                </div>
+            </div>
+            
+            <div id="no-posts" class="no-posts" style="display: none;">
+                <div class="no-posts-icon">📝</div>
+                <h3>No posts yet!</h3>
+                <p>Check back later for messages.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Timeline functionality - Read-only
+    class TimelineManager {
+        constructor() {
+            this.postsContainer = document.getElementById('timeline-posts');
+            this.noPostsDiv = document.getElementById('no-posts');
+            this.postCountEl = document.getElementById('post-count');
+            this.recentCountEl = document.getElementById('recent-count');
+            
+            this.init();
+        }
+
+        init() {
+            this.loadPosts();
+        }
+
+        async loadPosts() {
+            try {
+                const response = await fetch('/api/timeline_post');
+                const data = await response.json();
+                
+                if (data.timeline_posts && data.timeline_posts.length > 0) {
+                    this.renderPosts(data.timeline_posts);
+                    this.updateStats(data.timeline_posts);
+                } else {
+                    this.showNoPosts();
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                this.showError();
+            }
+        }
+
+        renderPosts(posts) {
+            this.postsContainer.innerHTML = '';
+            this.noPostsDiv.style.display = 'none';
+            
+            posts.forEach((post, index) => {
+                const postElement = this.createPostElement(post, index);
+                this.postsContainer.appendChild(postElement);
+            });
+
+            // Add animation delays
+            const postCards = this.postsContainer.querySelectorAll('.timeline-post');
+            postCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, index * 150);
+            });
+        }
+
+        createPostElement(post, index) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'timeline-post';
+            
+            const postDate = new Date(post.created_at);
+            const timeAgo = this.getTimeAgo(postDate);
+            
+            postDiv.innerHTML = `
+                <div class="timeline-marker">
+                    <div class="marker-dot">
+                        <span class="post-number">${index + 1}</span>
+                    </div>
+                    <div class="timeline-line"></div>
+                </div>
+                
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="author-avatar">
+                                ${post.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">${this.escapeHtml(post.name)}</h4>
+                                <p class="post-meta">
+                                    <span class="post-email">${this.escapeHtml(post.email)}</span>
+                                    <span class="post-date" title="${postDate.toLocaleString()}">${timeAgo}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <p>${this.escapeHtml(post.content)}</p>
+                    </div>
+                    
+                    <div class="post-footer">
+                        <span class="post-timestamp">Posted ${timeAgo}</span>
+                    </div>
+                </div>
+            `;
+            
+            return postDiv;
+        }
+
+        updateStats(posts) {
+            this.postCountEl.textContent = posts.length;
+            
+            // Count posts from the last week
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            
+            const recentPosts = posts.filter(post => {
+                const postDate = new Date(post.created_at);
+                return postDate > oneWeekAgo;
+            });
+            
+            this.recentCountEl.textContent = recentPosts.length;
+        }
+
+        showNoPosts() {
+            this.postsContainer.innerHTML = '';
+            this.noPostsDiv.style.display = 'block';
+            this.postCountEl.textContent = '0';
+            this.recentCountEl.textContent = '0';
+        }
+
+        showError(message = 'Something went wrong') {
+            this.postsContainer.innerHTML = `
+                <div class="error-message">
+                    <div class="error-icon">❌</div>
+                    <h3>Error Loading Posts</h3>
+                    <p>${message}</p>
+                    <button onclick="timeline.loadPosts()" class="retry-btn">Try Again</button>
+                </div>
+            `;
+        }
+
+        getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Just now';
+            if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+            if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+            if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+            
+            return date.toLocaleDateString();
+        }
+
+        escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    }
+
+    // Initialize timeline when page loads
+    let timeline;
+    document.addEventListener('DOMContentLoaded', () => {
+        timeline = new TimelineManager();
+    });
+</script>
+{% endblock %}

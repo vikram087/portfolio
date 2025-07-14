@@ -1,183 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="Personal Portfolio">
-    <meta property="og:description" content="My Personal Portfolio">
-    <meta property="og:url" content="{{ url }}">
+{% block title %}Vikram Penumarti{% endblock %}
+{% block page_title %}Personal Portfolio{% endblock %}
+{% block page_description %}My Personal Portfolio{% endblock %}
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
+{% block content %}
+<div class="profile">
+    <div id="profile-picture" class="profile-picture">
+        <img src="{{ url_for('static', filename='img/Headshot.jpg') }}" alt="Vikram Penumarti">
+        <button id="music-button" class="music-button" title="Play one of my favorite songs">
+            <span class="music-icon">🎵</span>
+        </button>
+        <audio id="background-music" preload="none">
+            <source src="{{ url_for('static', filename='audio/best_time_clean.mp3') }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <h1>Vikram Penumarti</h1>
+</div>
 
-    <link lang='sass' rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel='icon' href="{{ url_for('static', filename='img/favicon.ico') }}" type='image/x-icon' />
-    <title>Vikram Penumarti</title>
-</head>
-
-<body>
-    <header class="nav-bar">
-        <div class="nav-content">
-            <a href="/" class="nav-logo">
-                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo" />
-            </a>
-            <nav class="nav-menu">
-                <a href="/" class="nav-link active">About</a>
-                <a href="/hobbies" class="nav-link">Hobbies</a>
-                <a href="/experience" class="nav-link">Experience</a>
-                <a href="/education" class="nav-link">Education</a>
-                <a href="/travel" class="nav-link">Travel</a>
-            </nav>
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+<!-- About Section -->
+<section class="about-section">
+    <div class="about-header">
+        <h2 class="about-title">About Me</h2>
+        <p class="about-subtitle">Student • Developer • Innovator</p>
+    </div>
+    <div class="about-content">
+        <p class="about-text">
+            Hi, I'm <span class="highlight">Vikram</span>, an incomming fourth year <span class="highlight">computer science major</span> at <span class="school-highlight">UC Davis</span>. I'm passionate about technology and building solutions that make a difference.
+        </p>
+        
+        <div class="about-stats">
+            <div class="stat-card">
+                <span class="stat-number">4th</span>
+                <span class="stat-label">Year Student</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">CS</span>
+                <span class="stat-label">Major</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">UC</span>
+                <span class="stat-label">Davis</span>
             </div>
         </div>
-    </header>
+    </div>
+</section>
+{% endblock %}
 
-    <main class="main-content">
-        <div class="profile">
-            <div id="profile-picture" class="profile-picture">
-                <img src="{{ url_for('static', filename='img/Headshot.jpg') }}" alt="Vikram Penumarti">
-                <button id="music-button" class="music-button" title="Play one of my favorite songs">
-                    <span class="music-icon">🎵</span>
-                </button>
-                <audio id="background-music" preload="none">
-                    <source src="{{ url_for('static', filename='audio/best_time_clean.mp3') }}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            <h1>Vikram Penumarti</h1>
-        </div>
+{% block extra_js %}
+<script>
+    // Smooth scrolling for profile picture
+    document.addEventListener('DOMContentLoaded', () => {
+        const profilePicture = document.getElementById('profile-picture');
+        profilePicture.style.opacity = '0';
+        profilePicture.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            profilePicture.style.transition = 'all 0.6s ease';
+            profilePicture.style.opacity = '1';
+            profilePicture.style.transform = 'translateY(0)';
+        }, 100);
+    });
 
-        <!-- About Section -->
-        <section class="about-section">
-            <div class="about-header">
-                <h2 class="about-title">About Me</h2>
-                <p class="about-subtitle">Student • Developer • Innovator</p>
-            </div>
-            <div class="about-content">
-                <p class="about-text">
-                    Hi, I'm <span class="highlight">Vikram</span>, an incomming fourth year <span class="highlight">computer science major</span> at <span class="school-highlight">UC Davis</span>. I'm passionate about technology and building solutions that make a difference.
-                </p>
-                
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <span class="stat-number">4th</span>
-                        <span class="stat-label">Year Student</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">CS</span>
-                        <span class="stat-label">Major</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">UC</span>
-                        <span class="stat-label">Davis</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+    // Music player functionality
+    document.addEventListener('DOMContentLoaded', () => {
+        const musicButton = document.getElementById('music-button');
+        const backgroundMusic = document.getElementById('background-music');
+        let isPlaying = false;
 
-    <script>
-        // Mobile menu toggle
-        const navToggle = document.querySelector('.nav-toggle');
-        const navMenu = document.querySelector('.nav-menu');
+        // Make sure elements exist
+        if (!musicButton || !backgroundMusic) {
+            console.error('Music elements not found');
+            return;
+        }
 
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            });
-        });
-
-        // Smooth scrolling for profile picture
-        document.addEventListener('DOMContentLoaded', () => {
-            const profilePicture = document.getElementById('profile-picture');
-            profilePicture.style.opacity = '0';
-            profilePicture.style.transform = 'translateY(20px)';
+        musicButton.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent any default button behavior
+            console.log('Music button clicked, isPlaying:', isPlaying);
             
-            setTimeout(() => {
-                profilePicture.style.transition = 'all 0.6s ease';
-                profilePicture.style.opacity = '1';
-                profilePicture.style.transform = 'translateY(0)';
-            }, 100);
-        });
-
-        // Music player functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            const musicButton = document.getElementById('music-button');
-            const backgroundMusic = document.getElementById('background-music');
-            let isPlaying = false;
-
-            // Make sure elements exist
-            if (!musicButton || !backgroundMusic) {
-                console.error('Music elements not found');
-                return;
-            }
-
-            musicButton.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent any default button behavior
-                console.log('Music button clicked, isPlaying:', isPlaying);
-                
-                if (isPlaying) {
-                    backgroundMusic.pause();
-                    musicButton.innerHTML = '<span class="music-icon">🎵</span>';
-                    musicButton.classList.remove('playing');
-                    isPlaying = false;
-                    console.log('Music paused');
-                } else {
-                    console.log('Attempting to play music...');
-                    console.log('Audio src:', backgroundMusic.src);
-                    
-                    // Load the audio first if not loaded
-                    if (backgroundMusic.readyState === 0) {
-                        backgroundMusic.load();
-                    }
-                    
-                    const playPromise = backgroundMusic.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                            console.log('Music started playing successfully');
-                            musicButton.innerHTML = '<span class="music-icon">⏸</span>';
-                            musicButton.classList.add('playing');
-                            isPlaying = true;
-                        }).catch((error) => {
-                            console.error('Audio play failed:', error);
-                            alert('Could not play audio. Error: ' + error.message);
-                        });
-                    }
-                }
-            });
-
-            // Reset button when song ends
-            backgroundMusic.addEventListener('ended', () => {
-                console.log('Song ended');
+            if (isPlaying) {
+                backgroundMusic.pause();
                 musicButton.innerHTML = '<span class="music-icon">🎵</span>';
                 musicButton.classList.remove('playing');
                 isPlaying = false;
-            });
-
-            // Set volume
-            backgroundMusic.volume = 0.3;
-
-            // Debug audio loading
-            backgroundMusic.addEventListener('loadstart', () => console.log('Audio loading started'));
-            backgroundMusic.addEventListener('canplay', () => console.log('Audio can start playing'));
-            backgroundMusic.addEventListener('error', (e) => console.error('Audio error:', e));
+                console.log('Music paused');
+            } else {
+                console.log('Attempting to play music...');
+                console.log('Audio src:', backgroundMusic.src);
+                
+                // Load the audio first if not loaded
+                if (backgroundMusic.readyState === 0) {
+                    backgroundMusic.load();
+                }
+                
+                const playPromise = backgroundMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('Music started playing successfully');
+                        musicButton.innerHTML = '<span class="music-icon">⏸</span>';
+                        musicButton.classList.add('playing');
+                        isPlaying = true;
+                    }).catch((error) => {
+                        console.error('Audio play failed:', error);
+                        alert('Could not play audio. Error: ' + error.message);
+                    });
+                }
+            }
         });
-    </script>
-</body>
-</html>
+
+        // Reset button when song ends
+        backgroundMusic.addEventListener('ended', () => {
+            console.log('Song ended');
+            musicButton.innerHTML = '<span class="music-icon">🎵</span>';
+            musicButton.classList.remove('playing');
+            isPlaying = false;
+        });
+
+        // Set volume
+        backgroundMusic.volume = 0.3;
+
+        // Debug audio loading
+        backgroundMusic.addEventListener('loadstart', () => console.log('Audio loading started'));
+        backgroundMusic.addEventListener('canplay', () => console.log('Audio can start playing'));
+        backgroundMusic.addEventListener('error', (e) => console.error('Audio error:', e));
+    });
+</script>
+{% endblock %}

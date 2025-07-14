@@ -1,11 +1,36 @@
+import datetime
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
+from peewee import CharField, DateTimeField, Model, MySQLDatabase
+from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
 
 app = Flask(__name__)
+
+mydb = MySQLDatabase(
+    os.getenv("MYSQL_DATABASE"),
+    user=os.getenv("MYSQL_USER"),
+    password=os.getenv("MYSQL_PASSWORD"),
+    host=os.getenv("MYSQL_HOST"),
+    port=3306,
+)
+
+
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = CharField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = mydb
+
+
+mydb.connect()
+mydb.create_tables([TimelinePost])
 
 # Enhanced hobbies data with detailed information
 hobbies_list = [
@@ -343,6 +368,44 @@ def hobby_detail(hobby_name):
     if not hobby:
         return "Hobby not found", 404
     return render_template("hobby_detail.html", hobby=hobby)
+
+
+@app.route("/api/timeline_post", methods=["POST"])
+def post_time_line_post():
+    name = request.form["name"]
+    email = request.form["email"]
+    content = request.form["content"]
+    timeline_post = TimelinePost.create(name=name, email=email, content=content)
+
+    return model_to_dict(timeline_post)
+
+
+@app.route("/api/timeline_post", methods=["GET"])
+def get_time_line_post():
+    return jsonify(
+        {
+            "timeline_posts": [
+                model_to_dict(p)
+                for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+            ]
+        }
+    ), 200
+
+
+@app.route("/api/timeline_post/<int:post_id>", methods=["DELETE"])
+def delete_timeline_post_by_id(post_id):
+    try:
+        deleted_count = TimelinePost.delete_by_id(post_id)
+
+        if deleted_count:
+            return jsonify(
+                {"message": f"Timeline post {post_id} deleted successfully"}
+            ), 200
+        else:
+            return jsonify({"error": "Timeline post not found"}), 404
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to delete timeline post: {str(e)}"}), 500
 
 
 if __name__ == "__main__":

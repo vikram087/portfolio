@@ -3,20 +3,24 @@ import os
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
-from peewee import CharField, DateTimeField, Model, MySQLDatabase
+from peewee import CharField, DateTimeField, Model, MySQLDatabase, SqliteDatabase
 from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
 
 app = Flask(__name__)
 
-mydb = MySQLDatabase(
-    os.getenv("MYSQL_DATABASE"),
-    user=os.getenv("MYSQL_USER"),
-    password=os.getenv("MYSQL_PASSWORD"),
-    host=os.getenv("MYSQL_HOST"),
-    port=3306,
-)
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    mydb = SqliteDatabase("file:memory?mode=memory&cache=shared", uri=True)
+else:
+    mydb = MySQLDatabase(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306,
+    )
 
 
 class TimelinePost(Model):
@@ -377,9 +381,16 @@ def hobby_detail(hobby_name):
 
 @app.route("/api/timeline_post", methods=["POST"])
 def post_time_line_post():
-    name = request.form["name"]
-    email = request.form["email"]
-    content = request.form["content"]
+    name = request.form.get("name")
+    email = request.form.get("email")
+    content = request.form.get("content")
+
+    if not all([name, email, content]):
+        return jsonify({"error": "missing name, email, or content"}), 400
+
+    if "@" not in email:
+        return jsonify({"error": "Invalid email"}), 400
+
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
 
     return model_to_dict(timeline_post)

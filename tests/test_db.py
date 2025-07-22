@@ -1,0 +1,42 @@
+import unittest
+
+from peewee import SqliteDatabase
+
+from app import TimelinePost, model_to_dict
+
+MODELS = [TimelinePost]
+
+test_db = SqliteDatabase(":memory:")
+
+
+class TestTimelinePost(unittest.TestCase):
+    def setUp(self):
+        test_db.bind(MODELS, bind_refs=False, bind_backrefs=False)
+
+        test_db.connect()
+        test_db.create_tables(MODELS)
+
+    def tearDown(self):
+        test_db.drop_tables(MODELS)
+
+        test_db.close()
+
+    def test_timeline_post(self):
+        first_post = TimelinePost.create(
+            name="John Doe", email="john@example.com", content="Hello world, I'm John!"
+        )
+
+        assert first_post.id == 1
+
+        second_post = TimelinePost.create(
+            name="Jane Doe", email="jane@example.com", content="Hello world, I'm Jane!"
+        )
+
+        assert second_post.id == 2
+
+        timeline_posts = {
+            post.id: model_to_dict(post) for post in TimelinePost.select()
+        }
+
+        assert timeline_posts.get(first_post.id) == model_to_dict(first_post)
+        assert timeline_posts.get(second_post.id) == model_to_dict(second_post)

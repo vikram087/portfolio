@@ -27,6 +27,7 @@ services:
     restart: always
     environment:
       - CERTBOT_EMAIL=vikram.penumarti@gmail.com
+      - CERTBOT_DOMAINS=vikram-pe-demo.duckdns.org
     ports:
       - 80:80
       - 443:443

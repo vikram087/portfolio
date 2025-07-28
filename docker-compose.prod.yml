@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   myportfolio:
     container_name: myportfolio
@@ -7,8 +5,8 @@ services:
     restart: always
     env_file:
       - .env
-    volumes:
-      - .:/myportfolio
+    networks:
+      - app-network
     depends_on:
       - mysql
 
@@ -20,6 +18,8 @@ services:
       - .env
     volumes:
       - mydatabase:/var/lib/mysql
+    networks:
+      - app-network
 
   nginx:
     container_name: nginx
@@ -27,7 +27,6 @@ services:
     restart: always
     environment:
       - CERTBOT_EMAIL=vikram.penumarti@gmail.com
-      - CERTBOT_DOMAINS=vikram-pe-demo.duckdns.org
     ports:
       - 80:80
       - 443:443
@@ -36,6 +35,12 @@ services:
       - ./user_conf.d:/etc/nginx/user_conf.d
     depends_on:
       - myportfolio
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mydatabase:

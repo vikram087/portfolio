@@ -27,6 +27,44 @@
     </div>
 </section>
 
+<!-- Post Form Section -->
+<section class="post-form-section">
+    <div class="container">
+        <div class="post-form-container">
+            <div class="form-header">
+                <h2>Share Your Message</h2>
+                <p>Leave a message or thought for others to see</p>
+            </div>
+            
+            <form id="timeline-form" class="post-form">
+                <div id="form-message" class="form-message" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" class="form-input" required maxlength="100">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" class="form-input" required maxlength="255">
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">Message *</label>
+                    <textarea id="content" name="content" class="form-textarea" required maxlength="1000" placeholder="Share your thoughts..."></textarea>
+                    <div class="char-counter">
+                        <span id="char-count">0</span>/1000
+                    </div>
+                </div>
+                
+                <button type="submit" id="submit-btn" class="submit-btn">
+                    <span class="btn-text">Post Message</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
 <!-- Timeline Posts Section -->
 <section class="timeline-section">
     <div class="container">
@@ -43,7 +81,7 @@
             <div id="no-posts" class="no-posts" style="display: none;">
                 <div class="no-posts-icon">📝</div>
                 <h3>No posts yet!</h3>
-                <p>Check back later for messages.</p>
+                <p>Be the first to share a message!</p>
             </div>
         </div>
     </div>
@@ -52,19 +90,122 @@
 
 {% block extra_js %}
 <script>
-    // Timeline functionality - Read-only
+    // Timeline functionality
     class TimelineManager {
         constructor() {
             this.postsContainer = document.getElementById('timeline-posts');
             this.noPostsDiv = document.getElementById('no-posts');
             this.postCountEl = document.getElementById('post-count');
             this.recentCountEl = document.getElementById('recent-count');
+            this.form = document.getElementById('timeline-form');
+            this.submitBtn = document.getElementById('submit-btn');
+            this.formMessage = document.getElementById('form-message');
+            this.contentTextarea = document.getElementById('content');
+            this.charCount = document.getElementById('char-count');
             
             this.init();
         }
 
         init() {
             this.loadPosts();
+            this.setupForm();
+            this.setupCharCounter();
+        }
+
+        setupForm() {
+            this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        }
+
+        setupCharCounter() {
+            this.contentTextarea.addEventListener('input', () => {
+                const length = this.contentTextarea.value.length;
+                this.charCount.textContent = length;
+                
+                const counter = this.charCount.parentElement;
+                counter.classList.remove('warning', 'error');
+                
+                if (length > 800) {
+                    counter.classList.add('warning');
+                }
+                if (length > 950) {
+                    counter.classList.add('error');
+                }
+            });
+        }
+
+        async handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this.form);
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const content = formData.get('content').trim();
+
+            // Client-side validation
+            if (!name || !email || !content) {
+                this.showFormMessage('Please fill in all fields.', 'error');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                this.showFormMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            this.setSubmitLoading(true);
+            this.hideFormMessage();
+
+            try {
+                const response = await fetch('/api/timeline_post', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    this.showFormMessage('Your message has been posted successfully!', 'success');
+                    this.form.reset();
+                    this.charCount.textContent = '0';
+                    this.charCount.parentElement.classList.remove('warning', 'error');
+                    // Reload posts to show the new one
+                    setTimeout(() => this.loadPosts(), 1000);
+                } else {
+                    this.showFormMessage(data.error || 'Failed to post message. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error posting message:', error);
+                this.showFormMessage('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                this.setSubmitLoading(false);
+            }
+        }
+
+        setSubmitLoading(loading) {
+            const btnText = this.submitBtn.querySelector('.btn-text');
+            
+            if (loading) {
+                this.submitBtn.disabled = true;
+                btnText.innerHTML = '<div class="btn-loading-spinner"></div>Posting...';
+            } else {
+                this.submitBtn.disabled = false;
+                btnText.textContent = 'Post Message';
+            }
+        }
+
+        showFormMessage(message, type) {
+            this.formMessage.textContent = message;
+            this.formMessage.className = `form-message ${type}`;
+            this.formMessage.style.display = 'block';
+            
+            // Auto-hide success messages after 5 seconds
+            if (type === 'success') {
+                setTimeout(() => this.hideFormMessage(), 5000);
+            }
+        }
+
+        hideFormMessage() {
+            this.formMessage.style.display = 'none';
         }
 
         async loadPosts() {

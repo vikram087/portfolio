@@ -308,16 +308,24 @@
 	box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
 	border: 3px solid white;
 	transition: transform 0.2s ease;
-}
-
-.marker-dot:hover {
-	transform: scale(1.1);
+	box-sizing: border-box;
+	min-width: 50px;
+	min-height: 50px;
+	aspect-ratio: 1;
+	flex-shrink: 0;
 }
 
 .post-number {
 	color: white;
 	font-weight: 600;
 	font-size: 0.9rem;
+	text-align: center;
+	line-height: 1;
+	width: 100%;
+}
+
+.marker-dot:hover {
+	transform: scale(1.1);
 }
 
 .timeline-line {

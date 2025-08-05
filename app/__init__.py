@@ -1,9 +1,11 @@
 import datetime
 import os
+import time
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
-from peewee import CharField, DateTimeField, Model, MySQLDatabase, SqliteDatabase
+from peewee import (CharField, DateTimeField, Model, MySQLDatabase,
+                    SqliteDatabase)
 from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
@@ -33,8 +35,24 @@ class TimelinePost(Model):
         database = mydb
 
 
-mydb.connect()
-mydb.create_tables([TimelinePost])
+def init_db():
+    mydb.connect()
+    mydb.create_tables([TimelinePost])
+
+def connect_with_retry(max_retries=10, delay=5):
+    for attempt in range(max_retries):
+        try:
+            init_db()
+            print(f"Database initialized successfully on attempt {attempt + 1}")
+            return
+        except Exception as e:
+            print(f"Database init attempt {attempt + 1} failed: {e}")
+            if attempt < max_retries - 1:
+                time.sleep(delay)
+            else:
+                raise e
+
+connect_with_retry()
 
 # Enhanced hobbies data with detailed information
 hobbies_list = [
@@ -398,14 +416,19 @@ def post_time_line_post():
 
 @app.route("/api/timeline_post", methods=["GET"])
 def get_time_line_post():
-    return jsonify(
-        {
-            "timeline_posts": [
-                model_to_dict(p)
-                for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
-            ]
-        }
-    ), 200
+    return (
+        jsonify(
+            {
+                "timeline_posts": [
+                    model_to_dict(p)
+                    for p in TimelinePost.select().order_by(
+                        TimelinePost.created_at.desc()
+                    )
+                ]
+            }
+        ),
+        200,
+    )
 
 
 @app.route("/api/timeline_post/<int:post_id>", methods=["DELETE"])
@@ -414,9 +437,10 @@ def delete_timeline_post_by_id(post_id):
         deleted_count = TimelinePost.delete_by_id(post_id)
 
         if deleted_count:
-            return jsonify(
-                {"message": f"Timeline post {post_id} deleted successfully"}
-            ), 200
+            return (
+                jsonify({"message": f"Timeline post {post_id} deleted successfully"}),
+                200,
+            )
         else:
             return jsonify({"error": "Timeline post not found"}), 404
 

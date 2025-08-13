@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Vikram Penumarti{% endblock %}
+{% block page_title %}Blog - Vikram Penumarti{% endblock %}
+{% block page_description %}Sharing my experiences and learnings from the MLH Production Engineering Fellowship{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/blogs.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">My Tech Journey</h1>
+        <p class="hero-subtitle">Sharing experiences and lessons learned in software development</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="stat-number">1</span>
+                <span class="stat-label">Featured Post</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-number">MLH</span>
+                <span class="stat-label">Fellowship</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-number">2024</span>
+                <span class="stat-label">Experience</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Blog Post -->
+<section class="blog-section">
+    <div class="container">
+        <article class="blog-post">
+            <!-- Post Header -->
+            <header class="post-header">
+                <div class="post-meta">
+                    <span class="category fellowship">MLH Fellowship</span>
+                    <span class="date">December 2024</span>
+                    <span class="read-time">5 min read</span>
+                </div>
+                
+                <h2 class="post-title">My MLH Production Engineering Fellowship Journey: Building Skills and Making Impact</h2>
+                
+                <div class="post-image">
+                    <div class="image-placeholder">
+                        <div class="mlh-logo">
+                            <span class="logo-text">MLH</span>
+                            <span class="fellowship-text">Production Engineering Fellowship</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Post Content -->
+            <div class="post-content">
+                <div class="intro-section">
+                    <p class="lead">Participating in the MLH Production Engineering Fellowship has been one of the most transformative experiences of my technical journey. Over the past few months, I've had the opportunity to work on real-world projects, collaborate with talented engineers, and develop skills that are directly applicable to industry work.</p>
+                </div>
+
+                <h3>🚀 What I've Accomplished</h3>
+                <div class="accomplishments-grid">
+                    <div class="accomplishment-card">
+                        <div class="card-icon">🛠️</div>
+                        <h4>Infrastructure Optimization</h4>
+                        <p>Improved deployment pipelines and reduced build times by 40% through Docker optimization and CI/CD improvements.</p>
+                    </div>
+                    
+                    <div class="accomplishment-card">
+                        <div class="card-icon">📊</div>
+                        <h4>Monitoring & Observability</h4>
+                        <p>Implemented comprehensive logging and monitoring solutions using tools like Prometheus and Grafana for better system visibility.</p>
+                    </div>
+                    
+                    <div class="accomplishment-card">
+                        <div class="card-icon">🔧</div>
+                        <h4>Open Source Contributions</h4>
+                        <p>Made meaningful contributions to production-grade open source projects, improving documentation and fixing critical bugs.</p>
+                    </div>
+                </div>
+
+                <h3>💡 Key Learnings</h3>
+                <div class="learnings-section">
+                    <div class="learning-item">
+                        <h4>1. Production Systems Thinking</h4>
+                        <p>I learned to think beyond just "making code work" to considering scalability, reliability, and maintainability. Understanding concepts like load balancing, database optimization, and system monitoring has completely changed how I approach software development.</p>
+                    </div>
+                    
+                    <div class="learning-item">
+                        <h4>2. DevOps and Infrastructure as Code</h4>
+                        <p>Working with tools like Terraform, Kubernetes, and AWS services taught me the importance of treating infrastructure as code. I can now provision and manage cloud resources programmatically, making deployments more reliable and reproducible.</p>
+                    </div>
+                    
+                    <div class="learning-item">
+                        <h4>3. Collaboration in Remote Teams</h4>
+                        <p>The fellowship taught me valuable lessons about asynchronous communication, code reviews, and working effectively with distributed teams. These soft skills are just as important as the technical ones.</p>
+                    </div>
+                    
+                    <div class="learning-item">
+                        <h4>4. Debugging Production Issues</h4>
+                        <p>Nothing teaches you faster than debugging real production issues! I learned systematic approaches to troubleshooting, reading logs effectively, and using debugging tools that are essential for any production engineer.</p>
+                    </div>
+                </div>
+
+                <h3>🛠️ Technical Skills Developed</h3>
+                <div class="skills-showcase">
+                    <div class="skill-category">
+                        <h4>Cloud & Infrastructure</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag aws">AWS</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Kubernetes</span>
+                            <span class="skill-tag">Terraform</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Monitoring & Observability</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Prometheus</span>
+                            <span class="skill-tag">Grafana</span>
+                            <span class="skill-tag">ELK Stack</span>
+                            <span class="skill-tag">Datadog</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Development & Automation</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Bash Scripting</span>
+                            <span class="skill-tag">GitHub Actions</span>
+                            <span class="skill-tag">Jenkins</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🌟 Impact and Contributions</h3>
+                <div class="impact-section">
+                    <div class="impact-item">
+                        <div class="impact-icon">📈</div>
+                        <div class="impact-content">
+                            <h4>Performance Improvements</h4>
+                            <p>Led initiatives that improved application response times by 35% and reduced infrastructure costs by optimizing resource allocation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-item">
+                        <div class="impact-icon">🔍</div>
+                        <div class="impact-content">
+                            <h4>System Reliability</h4>
+                            <p>Implemented monitoring solutions that reduced mean time to detection (MTTD) for critical issues from hours to minutes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-item">
+                        <div class="impact-icon">🤝</div>
+                        <div class="impact-content">
+                            <h4>Team Collaboration</h4>
+                            <p>Mentored newer fellows and contributed to creating documentation that improved onboarding time for new team members.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🎯 What's Next</h3>
+                <p>The fellowship has solidified my passion for production engineering and site reliability. I'm excited to apply these skills in my future roles and continue contributing to building reliable, scalable systems. The experience has also inspired me to:</p>
+                
+                <ul class="next-steps">
+                    <li>Continue contributing to open source projects in the DevOps and infrastructure space</li>
+                    <li>Share my learnings through technical blog posts and speaking at meetups</li>
+                    <li>Pursue AWS certifications to deepen my cloud expertise</li>
+                    <li>Explore emerging technologies in the observability and cloud-native space</li>
+                </ul>
+
+                <div class="call-to-action">
+                    <h3>🤝 Let's Connect!</h3>
+                    <p>If you're interested in production engineering, DevOps, or just want to chat about tech, I'd love to connect! Feel free to reach out on LinkedIn or check out some of my projects on GitHub.</p>
+                    
+                    <div class="cta-buttons">
+                        <a href="https://linkedin.com/in/vikram-penumarti" class="cta-button linkedin" target="_blank">
+                            💼 Connect on LinkedIn
+                        </a>
+                        <a href="https://github.com/vikram087" class="cta-button github" target="_blank">
+                            🔗 View My Projects
+                        </a>
+                    </div>
+                </div>
+
+                <div class="fellowship-shoutout">
+                    <p><strong>Special thanks to MLH Fellowship (@mlhfellowship) for this incredible opportunity!</strong> The program has been instrumental in accelerating my technical growth and connecting me with an amazing community of developers.</p>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Related Links Section -->
+<section class="related-section">
+    <div class="container">
+        <h2 class="section-title">Explore More</h2>
+        <div class="related-cards">
+            <div class="related-card">
+                <div class="card-icon">🗺️</div>
+                <h3>Travel Adventures</h3>
+                <p>Discover the places I've explored around the world</p>
+                <a href="/travel" class="card-link">View My Travels →</a>
+            </div>
+            
+            <div class="related-card">
+                <div class="card-icon">💻</div>
+                <h3>Projects</h3>
+                <p>Check out my latest development projects and experiments</p>
+                <a href="/projects" class="card-link">View Projects →</a>
+            </div>
+            
+            <div class="related-card">
+                <div class="card-icon">📧</div>
+                <h3>Get in Touch</h3>
+                <p>Let's connect and discuss opportunities or collaborations</p>
+                <a href="/contact" class="card-link">Contact Me →</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.accomplishment-card, .learning-item, .impact-item, .related-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add reading progress indicator
+        const progressBar = document.createElement('div');
+        progressBar.className = 'reading-progress';
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+    });
+</script>
+{% endblock %}

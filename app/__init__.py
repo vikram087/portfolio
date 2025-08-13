@@ -4,8 +4,7 @@ import time
 
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
-from peewee import (CharField, DateTimeField, Model, MySQLDatabase,
-                    SqliteDatabase)
+from peewee import CharField, DateTimeField, Model, MySQLDatabase, SqliteDatabase
 from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
@@ -39,6 +38,7 @@ def init_db():
     mydb.connect()
     mydb.create_tables([TimelinePost])
 
+
 def connect_with_retry(max_retries=10, delay=5):
     for attempt in range(max_retries):
         try:
@@ -51,6 +51,7 @@ def connect_with_retry(max_retries=10, delay=5):
                 time.sleep(delay)
             else:
                 raise e
+
 
 connect_with_retry()
 
@@ -384,6 +385,11 @@ def travel():
 @app.route("/timeline")
 def timeline():
     return render_template("timeline.html", title="Timeline")
+
+
+@app.route("/blogs")
+def blogs():
+    return render_template("blogs.html", title="Blogs")
 
 
 @app.route("/hobbies/<hobby_name>")
